@@ -115,9 +115,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		02FDC2CA194DF89D00E8CBC9 /* mac2imgur */ = {
+		02FDC2CA194DF89D00E8CBC9 /* ScreamShot */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 02FDC2E7194DF89D00E8CBC9 /* Build configuration list for PBXNativeTarget "mac2imgur" */;
+			buildConfigurationList = 02FDC2E7194DF89D00E8CBC9 /* Build configuration list for PBXNativeTarget "ScreamShot" */;
 			buildPhases = (
 				02FDC2C7194DF89D00E8CBC9 /* Sources */,
 				02FDC2C8194DF89D00E8CBC9 /* Frameworks */,
@@ -128,7 +128,7 @@
 			);
 			dependencies = (
 			);
-			name = mac2imgur;
+			name = ScreamShot;
 			productName = mac2imgur;
 			productReference = 02FDC2CB194DF89D00E8CBC9 /* mac2imgur.app */;
 			productType = "com.apple.product-type.application";
@@ -165,7 +165,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				02FDC2CA194DF89D00E8CBC9 /* mac2imgur */,
+				02FDC2CA194DF89D00E8CBC9 /* ScreamShot */,
 			);
 		};
 /* End PBXProject section */
@@ -304,6 +304,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				METAL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -352,7 +353,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		02FDC2E7194DF89D00E8CBC9 /* Build configuration list for PBXNativeTarget "mac2imgur" */ = {
+		02FDC2E7194DF89D00E8CBC9 /* Build configuration list for PBXNativeTarget "ScreamShot" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02FDC2E8194DF89D00E8CBC9 /* Debug */,
