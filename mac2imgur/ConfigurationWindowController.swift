@@ -16,30 +16,22 @@
 
 import Cocoa
 
-class ImgurAuthWindowController: NSWindowController {
-    
-    var imgurClient: ImgurClient!
+class ConfigurationWindowController: NSWindowController {
     var prefs: PreferencesManager!
     var callback: (() -> ())!
     
-    @IBOutlet weak var signInButton: NSButton!
-    @IBOutlet weak var pinCodeField: NSTextField!
+    @IBOutlet weak var uploadUrl: NSTextField!
     @IBOutlet weak var saveButton: NSButton!
 
-    @IBAction func signInButtonClick(sender: AnyObject) {
-        imgurClient.openBrowserForAuth()
+    func setInputValueSansAppleEventCarJeSaisPasFaire(){
+        let value = prefs.getString("url", def: "http://j.ungeek.fr/upload.php")!
+        uploadUrl.stringValue = "\(value)"
+        uploadUrl.editable = true
     }
-    
+
     @IBAction func onSaveButtonClick(sender: AnyObject) {
-        if pinCodeField.stringValue != "" {
-            imgurClient.getTokenFromPin(pinCodeField.stringValue, callback: {
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let authWindow = self.window {
-                        authWindow.close()
-                    }
-                }
-                self.callback()
-            })
-        }
+        prefs.setString("url", value: uploadUrl.stringValue)
+        self.callback()
+        close()
     }
 }

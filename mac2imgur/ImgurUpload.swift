@@ -21,57 +21,37 @@ class ImgurUpload {
     let boundary: String = "---------------------\(arc4random())\(arc4random())" // Random boundary
     var pathToImage: String
     var isScreenshot: Bool
-    var client: ImgurClient
     var delegate: UploadControllerDelegate
+    var app: AppDelegate
     
-    init(pathToImage: String, isScreenshot: Bool, client: ImgurClient, delegate: UploadControllerDelegate) {
+    init(app: AppDelegate, pathToImage: String, isScreenshot: Bool, delegate: UploadControllerDelegate) {
         self.pathToImage = pathToImage
         self.isScreenshot = isScreenshot
-        self.client = client
         self.delegate = delegate
+        self.app = app
     }
     
-    func attemptUpload(authenticated: Bool) {
-        
-        println("Uploading image as " + (authenticated ? "authenticated" : "anonymous") + " user")
+    func attemptUpload(uploaderUrl: String) {
+        println("Uploading image.")
+        app.updateStatusIcon(true)
         
         let url: NSURL = NSURL(fileURLWithPath: pathToImage)!
         let imageData: NSData = NSData(contentsOfURL: url, options: nil, error: nil)!
         
         let request = NSMutableURLRequest()
-        request.URL = NSURL(string: "https://api.imgur.com/3/upload")
+        request.URL = NSURL(string: uploaderUrl)
         request.HTTPMethod = "POST"
         
         let requestBody = NSMutableData()
         let contentType = "multipart/form-data; boundary=\(boundary)"
         request.addValue(contentType, forHTTPHeaderField: "Content-Type")
         
-        // Add Client-ID authorization
-        if authenticated {
-            println("Access token: \(client.accessToken!)")
-            request.addValue("Client-Bearer \(client.accessToken!)", forHTTPHeaderField: "Authorization")
-        } else {
-            request.addValue("Client-ID \(client.imgurClientId)", forHTTPHeaderField: "Authorization")
-        }
-        
         // Add image data
         requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(pathToImage.pathExtension)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(pathToImage.lastPathComponent)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
         requestBody.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         requestBody.appendData(imageData)
-        requestBody.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        
-        // Add title
-        requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Content-Disposition: form-data; name=\"title\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData(pathToImage.lastPathComponent.stringByDeletingPathExtension.dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        
-        // Add description
-        requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Content-Disposition: form-data; name=\"description\"\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Uploaded by mac2imgur! (\(client.projectUrl))".dataUsingEncoding(NSUTF8StringEncoding)!)
         requestBody.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
         requestBody.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
@@ -86,8 +66,8 @@ class ImgurUpload {
             } else {
                 if let responseDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
                     println("Received response: \(responseDict)")
-                    if responseDict.valueForKey("status") != nil && responseDict.valueForKey("status")?.integerValue == 200 {
-                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: responseDict.valueForKey("data")!.valueForKey("link") as String, pathToImage: self.pathToImage)
+                    if (responseDict.valueForKey("success") != nil && responseDict.valueForKey("success") as Bool) {
+                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: responseDict.valueForKey("link") as String, pathToImage: self.pathToImage)
                     } else {
                         NSLog("An error occurred: %@", responseDict);
                         self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
@@ -96,6 +76,7 @@ class ImgurUpload {
                     NSLog("An error occurred - the response was invalid: %@", response)
                     self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
                 }
+                self.app.updateStatusIcon(false)
             }
         })
     }

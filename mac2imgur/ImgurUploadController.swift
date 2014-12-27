@@ -17,42 +17,25 @@
 import Foundation
 
 class ImgurUploadController {
-    
-    let client: ImgurClient
+    var pref: PreferencesManager
     var uploadQueue: [ImgurUpload]
     var authenticationInProgress: Bool
     
-    init(imgurClient: ImgurClient) {
-        self.client = imgurClient
+    init(pref: PreferencesManager) {
         self.uploadQueue = []
+        self.pref = pref
         self.authenticationInProgress = false
     }
     
     func addToQueue(upload: ImgurUpload) {
         uploadQueue.append(upload)
-        
-        if client.authenticated {
-            // If necessary, request a new access token
-            if client.isAccessTokenValid() {
-                processQueue(true)
-            } else {
-                if !authenticationInProgress {
-                    authenticationInProgress = true
-                    self.client.requestNewAccessToken({ () -> () in
-                        self.authenticationInProgress = false
-                        self.processQueue(true)
-                    })
-                }
-            }
-        } else {
-            processQueue(false)
-        }
     }
     
     func processQueue(authenticated: Bool) {
         // Upload all images in queue
+        let uploadUrl = pref.getString("url", def: "http://j.ungeek.fr/upload.php")!
         for upload in uploadQueue {
-            upload.attemptUpload(authenticated)
+            upload.attemptUpload(uploadUrl)
         }
         // Clear queue
         uploadQueue.removeAll(keepCapacity: false)

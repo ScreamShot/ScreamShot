@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -14,14 +14,14 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="mac2imgur" customModuleProvider="target">
             <connections>
-                <outlet property="accountItem" destination="oDJ-vp-azL" id="CP9-rD-GYd"/>
+                <outlet property="deleteAfterUploadOption" destination="Hcu-OJ-uxu" id="0bW-Sw-X6s"/>
+                <outlet property="disableDetectionOption" destination="8W0-Wi-U05" id="T4x-qP-cgE"/>
                 <outlet property="menu" destination="Qba-hr-jWV" id="gnm-M9-Vwq"/>
             </connections>
         </customObject>
-        <customObject id="uIM-P4-40h" customClass="SUUpdater"/>
         <menu id="Qba-hr-jWV">
             <items>
-                <menuItem title="Select images..." id="d5R-Ji-SH4">
+                <menuItem title="Select files" id="d5R-Ji-SH4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="selectImages:" target="Voe-Tx-rLC" id="cfe-EI-jrC"/>
@@ -30,7 +30,7 @@
                 <menuItem title="Copy last link" id="fLq-E7-ss8">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="copyLastLink:" target="Voe-Tx-rLC" id="luD-E6-dqE"/>
+                        <action selector="copyLastLink:" target="Voe-Tx-rLC" id="H0u-6J-Z3r"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="m8J-uo-3rd"/>
@@ -38,35 +38,29 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Options" id="1Si-it-hd3">
                         <items>
-                            <menuItem title="Account" id="oDJ-vp-azL">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="accountAction:" target="Voe-Tx-rLC" id="E9J-67-hVL"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="ANL-Dj-7co"/>
                             <menuItem title="Delete screenshot after upload" id="Hcu-OJ-uxu">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="deleteAfterUploadOption:" target="Voe-Tx-rLC" id="eJM-fm-RvG"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Pause screenshot detection" id="8W0-Wi-U05">
+                            <menuItem title="Disable screenshot detection" id="8W0-Wi-U05">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="pauseDetectionOption:" target="Voe-Tx-rLC" id="AjQ-Lh-ufl"/>
+                                    <action selector="disableDetectionOption:" target="Voe-Tx-rLC" id="AjQ-Lh-ufl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="7eN-8o-zEQ"/>
+                            <menuItem title="Configuration" id="xwN-bS-7vc">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="accountAction:" target="Voe-Tx-rLC" id="ckk-gu-zWk"/>
                                 </connections>
                             </menuItem>
                         </items>
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="e83-b6-pER"/>
-                <menuItem title="About mac2imgur" id="7QY-eq-IdC">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="about:" target="Voe-Tx-rLC" id="GSv-ss-7kU"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Quit" id="nTb-az-bhw">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -76,5 +70,15 @@
             </items>
             <point key="canvasLocation" x="382.5" y="359.5"/>
         </menu>
+        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jd5-kx-zWJ">
+            <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="JP5-zV-9rp">
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+            <point key="canvasLocation" x="531" y="398.5"/>
+        </textField>
     </objects>
 </document>

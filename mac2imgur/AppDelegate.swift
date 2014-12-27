@@ -19,18 +19,18 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate, ScreenshotMonitorDelegate, UploadControllerDelegate {
     
     @IBOutlet weak var menu: NSMenu!
-    @IBOutlet weak var accountItem: NSMenuItem!
     
     var prefs: PreferencesManager!
-    var imgurClient: ImgurClient!
     var monitor: ScreenshotMonitor!
     var uploadController: ImgurUploadController!
-    var authController: ImgurAuthWindowController!
+    var authController: ConfigurationWindowController!
+    @IBOutlet weak var deleteAfterUploadOption: NSMenuItem!
+    @IBOutlet weak var disableDetectionOption: NSMenuItem!
     var statusItem: NSStatusItem!
     var activeIcon: NSImage!
     var inactiveIcon: NSImage!
     var lastLink: String = ""
-    var paused = false
+
     
     // Delegate methods
     
@@ -38,8 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
         
         prefs = PreferencesManager()
-        imgurClient = ImgurClient(preferences: prefs)
-        uploadController = ImgurUploadController(imgurClient: imgurClient)
+        uploadController = ImgurUploadController(pref: prefs)
         
         // Create status bar icons
         inactiveIcon = NSImage(named: "StatusInactive")!
@@ -47,14 +46,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         activeIcon = NSImage(named: "StatusActive")!
         activeIcon.setTemplate(true)
         
-        // Set account menu item to relevant title
-        updateAccountItemTitle()
-        
         // Add menu to status bar
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1) // NSVariableStatusItemLength
         statusItem.menu = menu
-        statusItem.toolTip = "mac2imgur"
+        statusItem.toolTip = "ScreamShot"
         updateStatusIcon(false)
+        
+        deleteAfterUploadOption.state = prefs.getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false) ? NSOnState : NSOffState
+        disableDetectionOption.state = prefs.getBool(PreferencesConstant.disableScreenshotDetection.rawValue, def: false) ? NSOnState : NSOffState
         
         // Start monitoring for screenshots
         monitor = ScreenshotMonitor(delegate: self)
@@ -66,22 +65,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
     
     func screenshotDetected(pathToImage: String) {
-        if !paused {
-            updateStatusIcon(true)
-            let upload = ImgurUpload(pathToImage: pathToImage, isScreenshot: true, client: imgurClient, delegate: self)
+        if !prefs.getBool(PreferencesConstant.disableScreenshotDetection.rawValue, def: false) {
+            let upload = ImgurUpload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
+            uploadController.processQueue(true)
         }
     }
     
     func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, pathToImage: String) {
-        updateStatusIcon(false)
         let type = isScreenshot ? "Screenshot" : "Image"
         if successful {
-            lastLink = ImgurClient.updateLinkToSSL(link)
-            copyToClipboard(lastLink)
-            displayNotification("\(type) uploaded successfully!", informativeText: self.lastLink)
+            lastLink = link
+            copyToClipboard(link)
+            displayNotification("\(type) uploaded successfully!", informativeText: link)
             
-            if isScreenshot && prefs.getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false) {
+            let deleteAfterUpload = prefs.getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false)
+            if isScreenshot && deleteAfterUpload {
                 println("Deleting screenshot @ \(pathToImage)")
                 deleteFile(pathToImage)
             }
@@ -96,6 +95,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
     }
     
+    @IBAction func accountAction(sender: NSMenuItem) {
+        authController = ConfigurationWindowController(windowNibName: "ConfigurationWindow")
+        authController.callback = {
+            self.displayNotification("ScreamShot", informativeText: "Configuration updated!")
+        }
+        authController.prefs = prefs
+        NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+        authController.showWindow(self)
+        authController.setInputValueSansAppleEventCarJeSaisPasFaire()
+    }
+    
     // Selector methods
     
     @IBAction func selectImages(sender: NSMenuItem) {
@@ -104,14 +114,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         panel.prompt = "Upload"
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
-        panel.allowedFileTypes = ["jpg", "jpeg", "gif", "png", "apng", "tiff", "bmp", "pdf", "xcf"]
         if panel.runModal() == NSOKButton {
             for imageURL in panel.URLs {
                 if let path = (imageURL as NSURL).path? {
-                    let upload = ImgurUpload(pathToImage: path, isScreenshot: false, client: imgurClient, delegate: self)
+                    let upload = ImgurUpload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
                     uploadController.addToQueue(upload)
-                    updateStatusIcon(true)
                 }
+                uploadController.processQueue(true)
             }
         }
     }
@@ -120,39 +129,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         copyToClipboard(lastLink)
     }
     
-    @IBAction func accountAction(sender: NSMenuItem) {
-        if imgurClient.authenticated {
-            imgurClient.deleteCredentials()
-            updateAccountItemTitle()
-        } else {
-            authController = ImgurAuthWindowController(windowNibName: "ImgurAuthWindow")
-            authController.imgurClient = imgurClient
-            authController.prefs = prefs
-            authController.callback = {
-                self.displayNotification("Signed in as \(self.imgurClient.username!)", informativeText: "")
-                self.updateAccountItemTitle()
-            }
-            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
-            authController.showWindow(self)
-        }
-    }
-    
     @IBAction func deleteAfterUploadOption(sender: NSMenuItem) {
-        if sender.state == NSOnState {
-            prefs.setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: false)
+        let delete = (sender.state != NSOnState)
+        prefs.setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: delete)
+        if !delete {
             sender.state = NSOffState
         } else {
-            prefs.setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: true)
             sender.state = NSOnState
         }
     }
     
-    @IBAction func pauseDetectionOption(sender: NSMenuItem) {
-        if sender.state == NSOnState {
-            paused = false
+    @IBAction func disableDetectionOption(sender: NSMenuItem) {
+        let disabled = (sender.state != NSOnState)
+        prefs.setBool(PreferencesConstant.disableScreenshotDetection.rawValue, value: disabled)
+        if !disabled {
             sender.state = NSOffState
         } else {
-            paused = true
             sender.state = NSOnState
         }
     }
@@ -195,9 +187,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func updateStatusIcon(isActive: Bool) {
         statusItem.image = isActive ? activeIcon : inactiveIcon
-    }
-    
-    func updateAccountItemTitle() {
-        accountItem.title = imgurClient.authenticated ? "Sign out (\(imgurClient.username!))" : "Sign in"
     }
 }
