@@ -20,6 +20,8 @@
 		07F6F73B19ABE6A600BDEB11 /* ImgurUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F6F73A19ABE6A600BDEB11 /* ImgurUpload.swift */; };
 		3C470B8F1A4F5EF10013136B /* ConfigurationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */; };
 		3C470B911A4F5F3E0013136B /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */; };
+		3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C66F87C1A504A1D00C8A449 /* MenuView.swift */; };
+		3C66F87F1A50629C00C8A449 /* upload.php in Resources */ = {isa = PBXBuildFile; fileRef = 3C66F87E1A50629C00C8A449 /* upload.php */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +33,7 @@
 		02B00A7419CE388800F924D6 /* PreferencesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		02B00A7619CE38AF00F924D6 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotMonitor.swift; sourceTree = "<group>"; };
-		02FDC2CB194DF89D00E8CBC9 /* mac2imgur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mac2imgur.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02FDC2CB194DF89D00E8CBC9 /* mac2imgur.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = mac2imgur.app; path = ScreamShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02FDC2CF194DF89D00E8CBC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02FDC2D0194DF89D00E8CBC9 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -41,6 +43,8 @@
 		3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationWindow.xib; sourceTree = "<group>"; };
 		3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationWindowController.swift; sourceTree = "<group>"; };
 		3C470B941A4F73DB0013136B /* mac2imgur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = mac2imgur.entitlements; sourceTree = "<group>"; };
+		3C66F87C1A504A1D00C8A449 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		3C66F87E1A50629C00C8A449 /* upload.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = upload.php; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 				3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */,
 				02FDC2CE194DF89D00E8CBC9 /* Supporting Files */,
 				028DC13C19FBBF6200833F97 /* ImgurUploadController.swift */,
+				3C66F87C1A504A1D00C8A449 /* MenuView.swift */,
 				07F6F73A19ABE6A600BDEB11 /* ImgurUpload.swift */,
 				02B00A7419CE388800F924D6 /* PreferencesManager.swift */,
 				02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */,
@@ -105,6 +110,7 @@
 		02FDC2CE194DF89D00E8CBC9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3C66F87E1A50629C00C8A449 /* upload.php */,
 				02FDC2CF194DF89D00E8CBC9 /* Info.plist */,
 				02FDC2D0194DF89D00E8CBC9 /* main.swift */,
 				02B00A7619CE38AF00F924D6 /* Credits.rtf */,
@@ -178,6 +184,7 @@
 				023ACBEA1A2A9ABF008510AC /* MainMenu.xib in Resources */,
 				02FDC2D5194DF89D00E8CBC9 /* Images.xcassets in Resources */,
 				022321BF19A6959500048626 /* LICENSE in Resources */,
+				3C66F87F1A50629C00C8A449 /* upload.php in Resources */,
 				02B00A7719CE38AF00F924D6 /* Credits.rtf in Resources */,
 				3C470B8F1A4F5EF10013136B /* ConfigurationWindow.xib in Resources */,
 			);
@@ -208,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02E0E91319A41CB200766FDB /* ScreenshotMonitor.swift in Sources */,
+				3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */,
 				07F6F73B19ABE6A600BDEB11 /* ImgurUpload.swift in Sources */,
 				028DC13D19FBBF6200833F97 /* ImgurUploadController.swift in Sources */,
 				02B00A7519CE388800F924D6 /* PreferencesManager.swift in Sources */,

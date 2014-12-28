@@ -19,16 +19,15 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate, ScreenshotMonitorDelegate, UploadControllerDelegate {
     
     @IBOutlet weak var menu: NSMenu!
+    let menuView = MenuView()
+    @IBOutlet weak var deleteAfterUploadOption: NSMenuItem!
+    @IBOutlet weak var launchAtStartup: NSMenuItem!
+    @IBOutlet weak var disableDetectionOption: NSMenuItem!
     
     var prefs: PreferencesManager!
     var monitor: ScreenshotMonitor!
     var uploadController: ImgurUploadController!
     var authController: ConfigurationWindowController!
-    @IBOutlet weak var deleteAfterUploadOption: NSMenuItem!
-    @IBOutlet weak var disableDetectionOption: NSMenuItem!
-    var statusItem: NSStatusItem!
-    var activeIcon: NSImage!
-    var inactiveIcon: NSImage!
     var lastLink: String = ""
 
     
@@ -36,36 +35,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
-        
+        menuView.menu = menu
         prefs = PreferencesManager()
         uploadController = ImgurUploadController(pref: prefs)
         
-        // Create status bar icons
-        inactiveIcon = NSImage(named: "StatusInactive")!
-        inactiveIcon.setTemplate(true)
-        activeIcon = NSImage(named: "StatusActive")!
-        activeIcon.setTemplate(true)
-        
         // Add menu to status bar
-        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1) // NSVariableStatusItemLength
-        statusItem.menu = menu
-        statusItem.toolTip = "ScreamShot"
         updateStatusIcon(false)
         
-        deleteAfterUploadOption.state = prefs.getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false) ? NSOnState : NSOffState
-        disableDetectionOption.state = prefs.getBool(PreferencesConstant.disableScreenshotDetection.rawValue, def: false) ? NSOnState : NSOffState
+        deleteAfterUploadOption.state = prefs.shouldDeleteAfterUpload() ? NSOnState : NSOffState
+        disableDetectionOption.state = prefs.isDetectionDisabled() ? NSOnState : NSOffState
+        launchAtStartup.state = (applicationIsInStartUpItems()) ? NSOnState : NSOffState
         
         // Start monitoring for screenshots
         monitor = ScreenshotMonitor(delegate: self)
     }
     
     func applicationWillTerminate(aNotification: NSNotification?) {
-        NSStatusBar.systemStatusBar().removeStatusItem(statusItem)
+        NSStatusBar.systemStatusBar().removeStatusItem(menuView.statusItem)
         monitor.query.stopQuery()
     }
     
     func screenshotDetected(pathToImage: String) {
-        if !prefs.getBool(PreferencesConstant.disableScreenshotDetection.rawValue, def: false) {
+        if !prefs.isDetectionDisabled() {
             let upload = ImgurUpload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
             uploadController.processQueue(true)
@@ -79,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             copyToClipboard(link)
             displayNotification("\(type) uploaded successfully!", informativeText: link)
             
-            let deleteAfterUpload = prefs.getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false)
+            let deleteAfterUpload = prefs.shouldDeleteAfterUpload()
             if isScreenshot && deleteAfterUpload {
                 println("Deleting screenshot @ \(pathToImage)")
                 deleteFile(pathToImage)
@@ -129,9 +120,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         copyToClipboard(lastLink)
     }
     
+    @IBAction func toggleStartup(sender: NSMenuItem) {
+        toggleLaunchAtStartup()
+        launchAtStartup.state = (applicationIsInStartUpItems()) ? NSOnState : NSOffState
+    }
+    
     @IBAction func deleteAfterUploadOption(sender: NSMenuItem) {
         let delete = (sender.state != NSOnState)
-        prefs.setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: delete)
+        prefs.setDeleteAfterUpload(delete)
         if !delete {
             sender.state = NSOffState
         } else {
@@ -141,7 +137,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     @IBAction func disableDetectionOption(sender: NSMenuItem) {
         let disabled = (sender.state != NSOnState)
-        prefs.setBool(PreferencesConstant.disableScreenshotDetection.rawValue, value: disabled)
+        prefs.setDetectionDisabled(disabled)
         if !disabled {
             sender.state = NSOffState
         } else {
@@ -186,6 +182,69 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
     
     func updateStatusIcon(isActive: Bool) {
-        statusItem.image = isActive ? activeIcon : inactiveIcon
+        menuView.setUploading(isActive)
+    }
+
+    func applicationIsInStartUpItems() -> Bool {
+        return (itemReferencesInLoginItems().existingReference != nil)
+    }
+    
+    func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItemRef?, lastReference: LSSharedFileListItemRef?) {
+        var itemUrl : UnsafeMutablePointer<Unmanaged<CFURL>?> = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
+        if let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
+            let loginItemsRef = LSSharedFileListCreate(
+                nil,
+                kLSSharedFileListSessionLoginItems.takeRetainedValue(),
+                nil
+                ).takeRetainedValue() as LSSharedFileListRef?
+            if loginItemsRef != nil {
+                let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
+                let lastItemRef: LSSharedFileListItemRef = loginItems.lastObject as LSSharedFileListItemRef
+                for var i = 0; i < loginItems.count; ++i {
+                    let currentItemRef: LSSharedFileListItemRef = loginItems.objectAtIndex(i) as LSSharedFileListItemRef
+                    if LSSharedFileListItemResolve(currentItemRef, 0, itemUrl, nil) == noErr {
+                        if let urlRef: NSURL =  itemUrl.memory?.takeRetainedValue() {
+                            if urlRef.isEqual(appUrl) {
+                                return (currentItemRef, lastItemRef)
+                            }
+                        }
+                    }
+                }
+                //The application was not found in the startup list
+                return (nil, lastItemRef)
+            }
+        }
+        return (nil, nil)
+    }
+    
+    func toggleLaunchAtStartup() {
+        let itemReferences = itemReferencesInLoginItems()
+        let shouldBeToggled = (itemReferences.existingReference == nil)
+        let loginItemsRef = LSSharedFileListCreate(
+            nil,
+            kLSSharedFileListSessionLoginItems.takeRetainedValue(),
+            nil
+            ).takeRetainedValue() as LSSharedFileListRef?
+        if loginItemsRef != nil {
+            if shouldBeToggled {
+                if let appUrl : CFURLRef = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
+                    LSSharedFileListInsertItemURL(
+                        loginItemsRef,
+                        itemReferences.lastReference,
+                        nil,
+                        nil,
+                        appUrl,
+                        nil,
+                        nil
+                    )
+                    println("Application was added to login items")
+                }
+            } else {
+                if let itemRef = itemReferences.existingReference {
+                    LSSharedFileListItemRemove(loginItemsRef,itemRef);
+                    println("Application was removed from login items")
+                }
+            }
+        }
     }
 }

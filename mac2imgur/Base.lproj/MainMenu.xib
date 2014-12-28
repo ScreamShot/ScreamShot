@@ -12,10 +12,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="mac2imgur" customModuleProvider="target">
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ScreamShot" customModuleProvider="target">
             <connections>
                 <outlet property="deleteAfterUploadOption" destination="Hcu-OJ-uxu" id="0bW-Sw-X6s"/>
                 <outlet property="disableDetectionOption" destination="8W0-Wi-U05" id="T4x-qP-cgE"/>
+                <outlet property="launchAtStartup" destination="KPZ-iB-rTK" id="XHW-en-Yce"/>
                 <outlet property="menu" destination="Qba-hr-jWV" id="gnm-M9-Vwq"/>
             </connections>
         </customObject>
@@ -57,6 +58,12 @@
                                     <action selector="accountAction:" target="Voe-Tx-rLC" id="ckk-gu-zWk"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Launch at startup" id="KPZ-iB-rTK">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleStartup:" target="Voe-Tx-rLC" id="nhS-xt-WoA"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -68,7 +75,7 @@
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="382.5" y="359.5"/>
+            <point key="canvasLocation" x="284.5" y="326.5"/>
         </menu>
         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jd5-kx-zWJ">
             <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>

@@ -33,7 +33,7 @@ class ImgurUploadController {
     
     func processQueue(authenticated: Bool) {
         // Upload all images in queue
-        let uploadUrl = pref.getString("url", def: "http://j.ungeek.fr/upload.php")!
+        let uploadUrl = pref.getUploadUrl()
         for upload in uploadQueue {
             upload.attemptUpload(uploadUrl)
         }

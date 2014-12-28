@@ -17,7 +17,7 @@
 import Foundation
 
 enum PreferencesConstant: String {
-    case refreshToken = "RefreshToken", username = "ImgurUsername", deleteScreenshotAfterUpload = "DeleteScreenshotAfterUpload", disableScreenshotDetection = "DisableScreenshotDetection"
+    case refreshToken = "RefreshToken", uploadUrl = "url", deleteScreenshotAfterUpload = "DeleteScreenshotAfterUpload", disableScreenshotDetection = "DisableScreenshotDetection"
 }
 
 class PreferencesManager {
@@ -28,11 +28,11 @@ class PreferencesManager {
         userDefaults = NSUserDefaults.standardUserDefaults()
     }
     
-    func hasKey(key: String) -> Bool {
+    private func hasKey(key: String) -> Bool {
         return userDefaults.objectForKey(key) != nil
     }
     
-    func getString(key: String, def: String?) -> String? {
+    private func getString(key: String, def: String?) -> String? {
         if hasKey(key) {
             return (userDefaults.objectForKey(key) as String)
         } else {
@@ -40,7 +40,7 @@ class PreferencesManager {
         }
     }
     
-    func getBool(key: String, def: Bool) -> Bool {
+    private func getBool(key: String, def: Bool) -> Bool {
         if hasKey(key) {
             return userDefaults.boolForKey(key)
         } else {
@@ -48,15 +48,39 @@ class PreferencesManager {
         }
     }
     
-    func setString(key: String, value: String) {
+    private func setString(key: String, value: String) {
         userDefaults.setValue(value, forKey: key)
     }
     
-    func setBool(key: String, value: Bool) {
+    private func setBool(key: String, value: Bool) {
         userDefaults.setBool(value, forKey: key)
     }
     
-    func deleteKey(key: String) {
+    private func deleteKey(key: String) {
         userDefaults.removeObjectForKey(key)
+    }
+    
+    func getUploadUrl() -> String {
+        return getString(PreferencesConstant.uploadUrl.rawValue, def: "http://j.ungeek.fr/upload.php")!
+    }
+    
+    func shouldDeleteAfterUpload() -> Bool {
+        return getBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, def: false)
+    }
+    
+    func isDetectionDisabled() -> Bool {
+        return getBool(PreferencesConstant.disableScreenshotDetection.rawValue, def: false)
+    }
+    
+    func setDeleteAfterUpload(state: Bool){
+        setBool(PreferencesConstant.disableScreenshotDetection.rawValue, value: state)
+    }
+    
+    func setDetectionDisabled(state: Bool){
+        setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: state)
+    }
+    
+    func setUploadUrl(uploadUrl: String) {
+        return setString(PreferencesConstant.uploadUrl.rawValue, value: uploadUrl)
     }
 }

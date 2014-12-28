@@ -24,13 +24,13 @@ class ConfigurationWindowController: NSWindowController {
     @IBOutlet weak var saveButton: NSButton!
 
     func setInputValueSansAppleEventCarJeSaisPasFaire(){
-        let value = prefs.getString("url", def: "http://j.ungeek.fr/upload.php")!
+        let value = prefs.getUploadUrl()
         uploadUrl.stringValue = "\(value)"
         uploadUrl.editable = true
     }
 
     @IBAction func onSaveButtonClick(sender: AnyObject) {
-        prefs.setString("url", value: uploadUrl.stringValue)
+        prefs.setUploadUrl(uploadUrl.stringValue)
         self.callback()
         close()
     }
