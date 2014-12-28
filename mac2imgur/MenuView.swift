@@ -4,29 +4,16 @@ class MenuView: NSView, NSMenuDelegate {
     var highlight = false
     var isActive = false
     
-    let ImageViewWidth: Int = 22
-    var imageView: NSImageView
-    
-    var activeIcon: NSImage!
-    var inactiveIcon: NSImage!
-    
     // NSVariableStatusItemLength == -1
     // Not using symbol because it doesn't link properly in Swift
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     // MARK: Initializers
     
     override init() {
-        var height: CGFloat = NSStatusBar.systemStatusBar().thickness
-        imageView = NSImageView(frame: NSMakeRect(0, 0, CGFloat(ImageViewWidth), height))
-        super.init(frame: NSMakeRect(0, 0, CGFloat(ImageViewWidth), height))
+        super.init(frame: NSMakeRect(0, 0, 24, 24))
         
-        self.addSubview(imageView)
         registerForDraggedTypes([NSFilenamesPboardType])
         statusItem.view = self
-        inactiveIcon = NSImage(named: "StatusInactive")!
-        inactiveIcon.setTemplate(true)
-        activeIcon = NSImage(named: "StatusActive")!
-        activeIcon.setTemplate(true)
         setupMenu()
     }
     
@@ -40,6 +27,12 @@ class MenuView: NSView, NSMenuDelegate {
         var menu = NSMenu()
         self.menu = menu
         self.menu!.delegate = self
+    }
+    override func drawRect(dirtyRect: NSRect) {
+        super.drawRect(dirtyRect)
+        frame = dirtyRect
+        statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
+        (isActive ? "🚀" : "📷").drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
     }
     
     override func mouseDown(theEvent: NSEvent) {
@@ -77,6 +70,7 @@ class MenuView: NSView, NSMenuDelegate {
     }
     
     func setUploading(status: Bool){
-        imageView.image = status ? activeIcon : inactiveIcon
+        isActive = status
+        needsDisplay = true
     }
 }
