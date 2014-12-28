@@ -1,13 +1,13 @@
-mac2imgur [![Build Status](https://travis-ci.org/mileswd/mac2imgur.svg?branch=master)](https://travis-ci.org/mileswd/mac2imgur)
+ScreamShot [![Build Status](https://travis-ci.org/PunKeel/ScreamShot.svg?branch=master)](https://travis-ci.org/PunKeel/ScreamShot)
 ========
 
 ###Installation Instructions###
 
-[Download a release](https://mac2imgur.mileswd.com/latest) then simply drop the application into your 'Applications' folder.
+[Download a release]() then simply drop the application into your 'Applications' folder.
 
 After opening it, you'll notice a small (hopefully unobtrusive) system tray icon:
 
-![mac2imgur system tray icon](https://i.imgur.com/ljnNsOK.png "mac2imgur system tray icon")
+![ScreamShot system tray icon](https://i.imgur.com/ljnNsOK.png "ScreamShot system tray icon")
 
 ---
 
@@ -23,26 +23,26 @@ After you've taken a screenshot, you will receive a notification via the Mac OS 
 
 If the upload was successful, the link to the screenshot has been copied to your clipboard.
 
-![mac2imgur upload notification](https://i.imgur.com/P2VIijt.png "mac2imgur upload notification")
+![ScreamShot upload notification](https://i.imgur.com/P2VIijt.png "ScreamShot upload notification")
 
 ---
 
 ###About###
 
-mac2imgur works by "listening" for new screenshots taken by the [built in screenshot functionality of Mac OS X](http://support.apple.com/kb/ht5775). To modify settings such as the directory where screenshots are stored or what format the screenshots are saved as, please refer to the relevant [terminal commands](http://secrets.blacktree.com/?showapp=com.apple.screencapture).
+ScreamShot works by "listening" for new screenshots taken by the [built in screenshot functionality of Mac OS X](http://support.apple.com/kb/ht5775). To modify settings such as the directory where screenshots are stored or what format the screenshots are saved as, please refer to the relevant [terminal commands](http://secrets.blacktree.com/?showapp=com.apple.screencapture).
 
 ---
 
 ###Issues & Pull Requests###
 
-If something isn't working as expected or you have an idea for a new feature, feel free to [submit an issue](https://github.com/mileswd/mac2imgur/issues).
+If something isn't working as expected or you have an idea for a new feature, feel free to [submit an issue](https://github.com/PunKeel/ScreamShot/issues).
 
-On the same note, pull requests to fix issues, add features or simply to improve the codebase are greatly appreciated - [fork](https://github.com/mileswd/fork) away!
+On the same note, pull requests to fix issues, add features or simply to improve the codebase are greatly appreciated - [fork](https://github.com/PunKeel/ScreamShot/fork) away!
 
 ---
 
 ###Legal###
 
-mac2imgur is a nonprofit, open source application that is not affiliated with Imgur LLC - however they sure do a fine job over there!
+ScreamShot is a nonprofit, open source application.
 
-This software is released under a GPLv3 license. See [LICENSE](https://github.com/mileswd/mac2imgur/blob/master/LICENSE) for more information.
+This software is released under a GPLv3 license. See [LICENSE](https://github.com/PunKeel/ScreamShot/blob/master/LICENSE) for more information.
