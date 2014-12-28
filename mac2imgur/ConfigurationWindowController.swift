@@ -31,7 +31,7 @@ class ConfigurationWindowController: NSWindowController {
 
     @IBAction func onSaveButtonClick(sender: AnyObject) {
         prefs.setUploadUrl(uploadUrl.stringValue)
-        self.callback()
         close()
+        self.callback()
     }
 }

@@ -35,9 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
-        menuView.menu = menu
         prefs = PreferencesManager()
         uploadController = ImgurUploadController(pref: prefs)
+        menuView.setupMenu(menu)
         
         // Add menu to status bar
         updateStatusIcon(false)
@@ -89,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @IBAction func accountAction(sender: NSMenuItem) {
         authController = ConfigurationWindowController(windowNibName: "ConfigurationWindow")
         authController.callback = {
-            self.displayNotification("ScreamShot", informativeText: "Configuration updated!")
+            self.displayNotification("Configuration updated!", informativeText: "")
         }
         authController.prefs = prefs
         NSApplication.sharedApplication().activateIgnoringOtherApps(true)
@@ -143,11 +143,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         } else {
             sender.state = NSOnState
         }
-    }
-    
-    @IBAction func about(sender: NSMenuItem) {
-        NSApplication.sharedApplication().orderFrontStandardAboutPanel(sender)
-        NSApplication.sharedApplication().activateIgnoringOtherApps(true)
     }
     
     @IBAction func quit(sender: NSMenuItem) {

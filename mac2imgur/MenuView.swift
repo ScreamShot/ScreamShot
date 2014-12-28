@@ -14,7 +14,6 @@ class MenuView: NSView, NSMenuDelegate {
         
         registerForDraggedTypes([NSFilenamesPboardType])
         statusItem.view = self
-        setupMenu()
     }
     
     required convenience init(coder: NSCoder) {
@@ -23,31 +22,36 @@ class MenuView: NSView, NSMenuDelegate {
     
     // MARK: Menu
     
-    func setupMenu() {
-        var menu = NSMenu()
+    func setupMenu(menu: NSMenu) {
         self.menu = menu
         self.menu!.delegate = self
     }
+    
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         frame = dirtyRect
         statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
+        if highlight{
+            NSColor.selectedMenuItemColor().setFill()
+        }else{
+            NSColor.clearColor().setFill()
+        }
+        NSRectFill(dirtyRect)
         (isActive ? "🚀" : "📷").drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
     }
     
     override func mouseDown(theEvent: NSEvent) {
         super.mouseDown(theEvent)
+        setHighlight(true)
         statusItem.popUpStatusItemMenu(menu!)
     }
     
     func menuWillOpen(menu: NSMenu!) {
-        highlight = true
-        needsDisplay = true
+        setHighlight(true)
     }
     
     func menuDidClose(menu: NSMenu!) {
-        highlight = false
-        needsDisplay = true
+        setHighlight(false)
     }
     // MARK: Dragging
     
@@ -72,5 +76,10 @@ class MenuView: NSView, NSMenuDelegate {
     func setUploading(status: Bool){
         isActive = status
         needsDisplay = true
+    }
+    
+    func setHighlight(status: Bool){
+        needsDisplay = (highlight != status)
+        highlight = status
     }
 }
