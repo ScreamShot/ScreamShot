@@ -1,5 +1,6 @@
 ScreamShot [![Build Status](https://travis-ci.org/PunKeel/ScreamShot.svg?branch=master)](https://travis-ci.org/PunKeel/ScreamShot)
 ========
+This project is based on [mileswd/mac2imgur](https://github.com/mileswd/mac2imgur).
 
 ###Installation Instructions###
 
