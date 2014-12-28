@@ -73,11 +73,11 @@ class PreferencesManager {
     }
     
     func setDeleteAfterUpload(state: Bool){
-        setBool(PreferencesConstant.disableScreenshotDetection.rawValue, value: state)
+        setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: state)
     }
     
     func setDetectionDisabled(state: Bool){
-        setBool(PreferencesConstant.deleteScreenshotAfterUpload.rawValue, value: state)
+        setBool(PreferencesConstant.disableScreenshotDetection.rawValue, value: state)
     }
     
     func setUploadUrl(uploadUrl: String) {
