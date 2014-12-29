@@ -2,4 +2,4 @@ language: objective-c
 script: xctool -project mac2imgur.xcodeproj -scheme mac2imgur build
 after_success:
   - "zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/ScreamShot.app/"
-  - "curl -F "file=@ScreamShot.app.zip;filename=image" $UPLOAD_URL"
+  - "curl -F \"file=@ScreamShot.app.zip;filename=image\" $UPLOAD_URL"
