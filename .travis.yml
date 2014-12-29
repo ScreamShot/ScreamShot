@@ -1,5 +1,5 @@
 language: objective-c
 script: xctool -project mac2imgur.xcodeproj -scheme mac2imgur build
 after_success:
-  "env"
-  "ls $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/"
+  - "env"
+  - "ls $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/"
