@@ -19,19 +19,17 @@ import Foundation
 class ImgurUploadController {
     var pref: PreferencesManager
     var uploadQueue: [ImgurUpload]
-    var authenticationInProgress: Bool
     
     init(pref: PreferencesManager) {
         self.uploadQueue = []
         self.pref = pref
-        self.authenticationInProgress = false
     }
     
     func addToQueue(upload: ImgurUpload) {
         uploadQueue.append(upload)
     }
     
-    func processQueue(authenticated: Bool) {
+    func processQueue() {
         // Upload all images in queue
         let uploadUrl = pref.getUploadUrl()
         for upload in uploadQueue {

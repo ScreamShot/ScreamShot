@@ -57,9 +57,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func screenshotDetected(pathToImage: String) {
         if !prefs.isDetectionDisabled() {
+            menuView.setUploading(true)
             let upload = ImgurUpload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
-            uploadController.processQueue(true)
+            uploadController.processQueue()
         }
     }
     
@@ -94,7 +95,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         authController.prefs = prefs
         NSApplication.sharedApplication().activateIgnoringOtherApps(true)
         authController.showWindow(self)
-        authController.setInputValueSansAppleEventCarJeSaisPasFaire()
     }
     
     // Selector methods
@@ -111,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     let upload = ImgurUpload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
                     uploadController.addToQueue(upload)
                 }
-                uploadController.processQueue(true)
+                uploadController.processQueue()
             }
         }
     }
@@ -174,7 +174,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         notification.title = title
         notification.informativeText = informativeText
         notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.defaultUserNotificationCenter().deliverNotification(notification)
+        NSUserNotificationCenter.defaultUserNotificationCenter().scheduleNotification(notification)
     }
     
     func updateStatusIcon(isActive: Bool) {

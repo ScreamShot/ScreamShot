@@ -68,7 +68,7 @@ class MenuView: NSView, NSMenuDelegate {
                 let upload = ImgurUpload(app: appDelegate, pathToImage: file, isScreenshot: false, delegate: appDelegate)
                 appDelegate.uploadController.addToQueue(upload)
             }
-            appDelegate.uploadController.processQueue(true)
+            appDelegate.uploadController.processQueue()
         }
         return true
     }

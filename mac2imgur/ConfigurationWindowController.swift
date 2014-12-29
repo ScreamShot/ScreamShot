@@ -23,7 +23,7 @@ class ConfigurationWindowController: NSWindowController {
     @IBOutlet weak var uploadUrl: NSTextField!
     @IBOutlet weak var saveButton: NSButton!
 
-    func setInputValueSansAppleEventCarJeSaisPasFaire(){
+    override func awakeFromNib() {
         let value = prefs.getUploadUrl()
         uploadUrl.stringValue = "\(value)"
         uploadUrl.editable = true
