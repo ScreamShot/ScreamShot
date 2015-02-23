@@ -26,17 +26,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     var prefs: PreferencesManager!
     var monitor: ScreenshotMonitor!
-    var uploadController: ImgurUploadController!
+    var uploadController: UploadController!
     var authController: ConfigurationWindowController!
     var lastLink: String = ""
-
+    
     
     // Delegate methods
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
         prefs = PreferencesManager()
-        uploadController = ImgurUploadController(pref: prefs)
+        uploadController = UploadController(pref: prefs)
         menuView.setupMenu(menu)
         
         // Add menu to status bar
@@ -58,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func screenshotDetected(pathToImage: String) {
         if !prefs.isDetectionDisabled() {
             menuView.setUploading(true)
-            let upload = ImgurUpload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
+            let upload = Upload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
             uploadController.processQueue()
         }
@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         if panel.runModal() == NSOKButton {
             for imageURL in panel.URLs {
                 if let path = (imageURL as NSURL).path? {
-                    let upload = ImgurUpload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
+                    let upload = Upload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
                     uploadController.addToQueue(upload)
                 }
                 uploadController.processQueue()
@@ -145,10 +145,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
     }
     
-    @IBAction func quit(sender: NSMenuItem) {
-        NSApplication.sharedApplication().terminate(sender)
-    }
-    
     // Utility methods
     
     func copyToClipboard(string: String) {
@@ -180,7 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func updateStatusIcon(isActive: Bool) {
         menuView.setUploading(isActive)
     }
-
+    
     func applicationIsInStartUpItems() -> Bool {
         return (itemReferencesInLoginItems().existingReference != nil)
     }

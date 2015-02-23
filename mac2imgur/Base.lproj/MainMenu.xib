@@ -22,20 +22,6 @@
         </customObject>
         <menu id="Qba-hr-jWV">
             <items>
-                <menuItem title="Menu" id="JR0-hh-pfX">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Menu" id="Q24-75-RKp">
-                        <items>
-                            <menuItem title="Item" id="AtC-hK-6kJ">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                        </items>
-                    </menu>
-                    <connections>
-                        <binding destination="NtC-xR-LN2" name="value" keyPath="values.lastItems" id="ahK-5J-azo"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="jsx-Ag-Sya"/>
                 <menuItem title="Select files" id="d5R-Ji-SH4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -85,7 +71,7 @@
                 <menuItem title="Quit" id="nTb-az-bhw">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quit:" target="Voe-Tx-rLC" id="hLk-un-qoP"/>
+                        <action selector="terminate:" target="-2" id="d5k-Eo-mpb"/>
                     </connections>
                 </menuItem>
             </items>

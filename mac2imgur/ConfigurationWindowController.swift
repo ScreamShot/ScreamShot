@@ -22,13 +22,14 @@ class ConfigurationWindowController: NSWindowController {
     
     @IBOutlet weak var uploadUrl: NSTextField!
     @IBOutlet weak var saveButton: NSButton!
-
+    
     override func awakeFromNib() {
         let value = prefs.getUploadUrl()
-        uploadUrl.stringValue = "\(value)"
+        uploadUrl.stringValue = value
         uploadUrl.editable = true
+        // @TODO: find a way to allow cmd+x / cmd+v in the field
     }
-
+    
     @IBAction func onSaveButtonClick(sender: AnyObject) {
         prefs.setUploadUrl(uploadUrl.stringValue)
         close()

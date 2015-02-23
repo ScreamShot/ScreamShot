@@ -16,7 +16,7 @@
 
 import Foundation
 
-class ImgurUpload {
+class Upload {
     
     let boundary: String = "---------------------\(arc4random())\(arc4random())" // Random boundary
     var pathToImage: String

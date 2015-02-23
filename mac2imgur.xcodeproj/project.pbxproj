@@ -11,13 +11,13 @@
 		022321BF19A6959500048626 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 022321BE19A6959500048626 /* LICENSE */; };
 		023ACBEA1A2A9ABF008510AC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */; };
 		024130DA1A05157E0062E9D3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B42AE619AB75DA00A6349D /* AppKit.framework */; };
-		028DC13D19FBBF6200833F97 /* ImgurUploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028DC13C19FBBF6200833F97 /* ImgurUploadController.swift */; };
+		028DC13D19FBBF6200833F97 /* UploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028DC13C19FBBF6200833F97 /* UploadController.swift */; };
 		02B00A7519CE388800F924D6 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B00A7419CE388800F924D6 /* PreferencesManager.swift */; };
 		02B00A7719CE38AF00F924D6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 02B00A7619CE38AF00F924D6 /* Credits.rtf */; };
 		02E0E91319A41CB200766FDB /* ScreenshotMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */; };
 		02FDC2D1194DF89D00E8CBC9 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FDC2D0194DF89D00E8CBC9 /* main.swift */; };
 		02FDC2D5194DF89D00E8CBC9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */; };
-		07F6F73B19ABE6A600BDEB11 /* ImgurUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F6F73A19ABE6A600BDEB11 /* ImgurUpload.swift */; };
+		07F6F73B19ABE6A600BDEB11 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F6F73A19ABE6A600BDEB11 /* Upload.swift */; };
 		3C470B8F1A4F5EF10013136B /* ConfigurationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */; };
 		3C470B911A4F5F3E0013136B /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */; };
 		3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C66F87C1A504A1D00C8A449 /* MenuView.swift */; };
@@ -29,7 +29,7 @@
 		022321BE19A6959500048626 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		022321C019A6F57E00048626 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		026E43D71A07E87300A08FC3 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		028DC13C19FBBF6200833F97 /* ImgurUploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgurUploadController.swift; sourceTree = "<group>"; };
+		028DC13C19FBBF6200833F97 /* UploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadController.swift; sourceTree = "<group>"; };
 		02B00A7419CE388800F924D6 /* PreferencesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		02B00A7619CE38AF00F924D6 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotMonitor.swift; sourceTree = "<group>"; };
@@ -39,7 +39,7 @@
 		02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02FDC2D7194DF89D00E8CBC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		07B42AE619AB75DA00A6349D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		07F6F73A19ABE6A600BDEB11 /* ImgurUpload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgurUpload.swift; sourceTree = "<group>"; };
+		07F6F73A19ABE6A600BDEB11 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationWindow.xib; sourceTree = "<group>"; };
 		3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationWindowController.swift; sourceTree = "<group>"; };
 		3C470B941A4F73DB0013136B /* mac2imgur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = mac2imgur.entitlements; sourceTree = "<group>"; };
@@ -97,9 +97,9 @@
 				3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */,
 				3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */,
 				02FDC2CE194DF89D00E8CBC9 /* Supporting Files */,
-				028DC13C19FBBF6200833F97 /* ImgurUploadController.swift */,
+				028DC13C19FBBF6200833F97 /* UploadController.swift */,
 				3C66F87C1A504A1D00C8A449 /* MenuView.swift */,
-				07F6F73A19ABE6A600BDEB11 /* ImgurUpload.swift */,
+				07F6F73A19ABE6A600BDEB11 /* Upload.swift */,
 				02B00A7419CE388800F924D6 /* PreferencesManager.swift */,
 				02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */,
 				0220B2AA19F4104A0064E9FE /* AppDelegate.swift */,
@@ -216,8 +216,8 @@
 			files = (
 				02E0E91319A41CB200766FDB /* ScreenshotMonitor.swift in Sources */,
 				3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */,
-				07F6F73B19ABE6A600BDEB11 /* ImgurUpload.swift in Sources */,
-				028DC13D19FBBF6200833F97 /* ImgurUploadController.swift in Sources */,
+				07F6F73B19ABE6A600BDEB11 /* Upload.swift in Sources */,
+				028DC13D19FBBF6200833F97 /* UploadController.swift in Sources */,
 				02B00A7519CE388800F924D6 /* PreferencesManager.swift in Sources */,
 				3C470B911A4F5F3E0013136B /* ConfigurationWindowController.swift in Sources */,
 				0220B2AB19F4104A0064E9FE /* AppDelegate.swift in Sources */,

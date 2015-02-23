@@ -65,7 +65,7 @@ class MenuView: NSView, NSMenuDelegate {
             let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
             let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
             for file in files{
-                let upload = ImgurUpload(app: appDelegate, pathToImage: file, isScreenshot: false, delegate: appDelegate)
+                let upload = Upload(app: appDelegate, pathToImage: file, isScreenshot: false, delegate: appDelegate)
                 appDelegate.uploadController.addToQueue(upload)
             }
             appDelegate.uploadController.processQueue()

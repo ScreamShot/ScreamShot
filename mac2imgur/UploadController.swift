@@ -16,16 +16,16 @@
 
 import Foundation
 
-class ImgurUploadController {
+class UploadController {
     var pref: PreferencesManager
-    var uploadQueue: [ImgurUpload]
+    var uploadQueue: [Upload]
     
     init(pref: PreferencesManager) {
         self.uploadQueue = []
         self.pref = pref
     }
     
-    func addToQueue(upload: ImgurUpload) {
+    func addToQueue(upload: Upload) {
         uploadQueue.append(upload)
     }
     
