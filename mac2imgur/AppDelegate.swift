@@ -52,6 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     func applicationWillTerminate(aNotification: NSNotification?) {
         NSStatusBar.systemStatusBar().removeStatusItem(menuView.statusItem)
+        println("Monitor stop")
         monitor.query.stopQuery()
     }
     
@@ -60,7 +61,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             menuView.setUploading(true)
             let upload = Upload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
-            uploadController.processQueue()
         }
     }
     
@@ -111,7 +111,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
                     let upload = Upload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
                     uploadController.addToQueue(upload)
                 }
-                uploadController.processQueue()
             }
         }
     }

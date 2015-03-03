@@ -17,7 +17,6 @@
 import Foundation
 
 class Upload {
-    
     let boundary: String = "---------------------\(arc4random())\(arc4random())" // Random boundary
     var pathToImage: String
     var isScreenshot: Bool
@@ -35,16 +34,15 @@ class Upload {
         println("Uploading image.")
         app.updateStatusIcon(true)
         
-        let url: NSURL = NSURL(fileURLWithPath: pathToImage)!
-        let imageData: NSData = NSData(contentsOfURL: url, options: nil, error: nil)!
+        let fileURL: NSURL = NSURL(fileURLWithPath: pathToImage)!
+        let imageData: NSData = NSData(contentsOfURL: fileURL, options: nil, error: nil)!
         
-        let request = NSMutableURLRequest()
-        request.URL = NSURL(string: uploaderUrl)
-        request.HTTPMethod = "POST"
-        
+        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: uploaderUrl)!)
+        mutableURLRequest.HTTPMethod = Method.POST.rawValue
+        let uploadData = NSMutableData()
         let requestBody = NSMutableData()
         let contentType = "multipart/form-data; boundary=\(boundary)"
-        request.addValue(contentType, forHTTPHeaderField: "Content-Type")
+        mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
         
         // Add image data
         requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
@@ -56,29 +54,31 @@ class Upload {
         
         requestBody.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
-        request.HTTPBody = requestBody
-        
-        // Attempt request
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            if error != nil {
-                NSLog(error!.localizedDescription);
-                self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
-            } else {
-                if let responseDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
-                    println("Received response: \(responseDict)")
-                    if (responseDict.valueForKey("success") != nil && responseDict.valueForKey("success") as Bool) {
-                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: responseDict.valueForKey("link") as String, pathToImage: self.pathToImage)
+        upload(mutableURLRequest, requestBody)
+            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+                self.setProgress(Double(totalBytesWritten)/Double(totalBytesExpectedToWrite))
+            }
+            .responseJSON { (request, response, _JSON, error) in
+                if error != nil {
+                    NSLog(error!.localizedDescription);
+                    self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
+                } else {
+                    var JSON = _JSON as NSDictionary!
+                    println("Received response: \(JSON)")
+                    if (JSON.valueForKey("success") != nil && JSON.valueForKey("success") as Bool) {
+                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: JSON.valueForKey("link") as String, pathToImage: self.pathToImage)
                     } else {
-                        NSLog("An error occurred: %@", responseDict);
+                        NSLog("An error occurred: %@", JSON);
                         self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
                     }
-                } else {
-                    NSLog("An error occurred - the response was invalid: %@", response)
-                    self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
                 }
-                self.app.updateStatusIcon(false)
-            }
-        })
+            self.app.uploadController.next()
+            self.app.updateStatusIcon(false)
+            self.setProgress(0)
+        }
+    }
+    func setProgress(progress: Double){
+        self.app.menuView.setProgress(progress)
     }
 }
 

@@ -19,6 +19,7 @@ import Foundation
 class UploadController {
     var pref: PreferencesManager
     var uploadQueue: [Upload]
+    var uploading = false
     
     init(pref: PreferencesManager) {
         self.uploadQueue = []
@@ -27,15 +28,20 @@ class UploadController {
     
     func addToQueue(upload: Upload) {
         uploadQueue.append(upload)
+        if !uploading{
+            next()
+        }
     }
     
-    func processQueue() {
-        // Upload all images in queue
-        let uploadUrl = pref.getUploadUrl()
-        for upload in uploadQueue {
-            upload.attemptUpload(uploadUrl)
+    func next(){
+        uploading = false
+        if uploadQueue.count == 0{
+            uploadQueue.removeAll(keepCapacity: false)
+        } else {
+            uploading = true
+            let upload = uploadQueue[uploadQueue.count-1]
+            uploadQueue.removeAtIndex(uploadQueue.count-1)
+            upload.attemptUpload(self.pref.getUploadUrl())
         }
-        // Clear queue
-        uploadQueue.removeAll(keepCapacity: false)
     }
 }

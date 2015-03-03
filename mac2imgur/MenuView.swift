@@ -3,6 +3,7 @@ import Cocoa
 class MenuView: NSView, NSMenuDelegate {
     var highlight = false
     var isActive = false
+    var progress = 0.0
     
     // NSVariableStatusItemLength == -1
     // Not using symbol because it doesn't link properly in Swift
@@ -38,6 +39,11 @@ class MenuView: NSView, NSMenuDelegate {
         }
         NSRectFill(dirtyRect)
         (isActive ? "🚀" : "📷").drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
+        var width = dirtyRect.size.width
+        var height = dirtyRect.size.height
+        var mySimpleRect: NSRect = NSMakeRect(0, 1, width*CGFloat(progress), 3)
+        NSColor.grayColor().set()
+        NSRectFill(mySimpleRect)
     }
     
     override func mouseDown(theEvent: NSEvent) {
@@ -68,7 +74,6 @@ class MenuView: NSView, NSMenuDelegate {
                 let upload = Upload(app: appDelegate, pathToImage: file, isScreenshot: false, delegate: appDelegate)
                 appDelegate.uploadController.addToQueue(upload)
             }
-            appDelegate.uploadController.processQueue()
         }
         return true
     }
@@ -81,5 +86,10 @@ class MenuView: NSView, NSMenuDelegate {
     func setHighlight(status: Bool){
         needsDisplay = (highlight != status)
         highlight = status
+    }
+    
+    func setProgress(progress: Double){
+        needsDisplay = (self.progress != progress)
+        self.progress = progress
     }
 }
