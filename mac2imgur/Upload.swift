@@ -18,13 +18,13 @@ import Foundation
 
 class Upload {
     let boundary: String = "---------------------\(arc4random())\(arc4random())" // Random boundary
-    var pathToImage: String
+    var imagePath: String
     var isScreenshot: Bool
     var delegate: UploadControllerDelegate
     var app: AppDelegate
     
-    init(app: AppDelegate, pathToImage: String, isScreenshot: Bool, delegate: UploadControllerDelegate) {
-        self.pathToImage = pathToImage
+    init(app: AppDelegate, imagePath: String, isScreenshot: Bool, delegate: UploadControllerDelegate) {
+        self.imagePath = imagePath
         self.isScreenshot = isScreenshot
         self.delegate = delegate
         self.app = app
@@ -34,7 +34,7 @@ class Upload {
         println("Uploading image.")
         app.updateStatusIcon(true)
         
-        let fileURL: NSURL = NSURL(fileURLWithPath: pathToImage)!
+        let fileURL: NSURL = NSURL(fileURLWithPath: imagePath)!
         let imageData: NSData = NSData(contentsOfURL: fileURL, options: nil, error: nil)!
         
         var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: uploaderUrl)!)
@@ -46,7 +46,7 @@ class Upload {
         
         // Add image data
         requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(pathToImage.lastPathComponent)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(imagePath.lastPathComponent)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
         requestBody.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         requestBody.appendData(imageData)
@@ -58,18 +58,18 @@ class Upload {
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
                 self.setProgress(Double(totalBytesWritten)/Double(totalBytesExpectedToWrite))
             }
-            .responseJSON { (request, response, _JSON, error) in
+            .responseJSON { (request, response, _JSON, error) -> () in
                 if error != nil {
                     NSLog(error!.localizedDescription);
-                    self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
+                    self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", imagePath: self.imagePath)
                 } else {
-                    var JSON = _JSON as NSDictionary!
+                    var JSON = _JSON as! NSDictionary!
                     println("Received response: \(JSON)")
-                    if (JSON.valueForKey("success") != nil && JSON.valueForKey("success") as Bool) {
-                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: JSON.valueForKey("link") as String, pathToImage: self.pathToImage)
+                    if (JSON.valueForKey("success") != nil && JSON.valueForKey("success") as! Bool) {
+                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: JSON.valueForKey("link") as! String, imagePath: self.imagePath)
                     } else {
                         NSLog("An error occurred: %@", JSON);
-                        self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", pathToImage: self.pathToImage)
+                        self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", imagePath: self.imagePath)
                     }
                 }
             self.app.uploadController.next()
@@ -83,5 +83,5 @@ class Upload {
 }
 
 protocol UploadControllerDelegate {
-    func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, pathToImage: String)
+    func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, imagePath: String)
 }

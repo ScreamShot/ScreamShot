@@ -27,11 +27,13 @@ class ScreenshotMonitor {
         query = NSMetadataQuery()
         
         // Only accept screenshots
-        query.predicate = NSPredicate(format: "kMDItemIsScreenCapture = 1", argumentArray: nil)
-        
-        // Add observers
+        query.predicate = NSPredicate(format: "kMDItemIsScreenCapture = 1")
+        query.searchScopes = [NSMetadataQueryLocalComputerScope]
+    }
+    
+    func startMonitoring() {
+        // Add observer
         NSNotificationCenter.defaultCenter().addObserverForName(NSMetadataQueryDidUpdateNotification, object: query, queue: NSOperationQueue.mainQueue()) { notification in
-            NSLog("EVENT <3")
             if let itemsAdded = notification.userInfo?["kMDQueryUpdateAddedItems"] as? [NSMetadataItem] {
                 for item in itemsAdded {
                     // Get the path to the screenshot
@@ -39,9 +41,9 @@ class ScreenshotMonitor {
                         let screenshotName = screenshotPath.lastPathComponent.stringByDeletingPathExtension
                         
                         // Ensure that the screenshot detected is from the right folder and isn't blacklisted
-                        if screenshotPath.stringByDeletingLastPathComponent.stringByStandardizingPath == self.getScreenshotDirectory().stringByStandardizingPath && !contains(self.blacklist, screenshotName) {
+                        if screenshotPath.stringByDeletingLastPathComponent.stringByStandardizingPath == self.screenshotLocationPath.stringByStandardizingPath && !contains(self.blacklist, screenshotName) {
                             println("Screenshot file event detected @ \(screenshotPath)")
-                            delegate.screenshotDetected(screenshotPath)
+                            self.delegate.screenshotDetected(screenshotPath)
                             self.blacklist.append(screenshotName)
                         }
                     }
@@ -51,18 +53,21 @@ class ScreenshotMonitor {
         // Start query
         query.startQuery()
     }
-
-    func getScreenshotDirectory() -> String {
-        if let dir = NSUserDefaults.standardUserDefaults().persistentDomainForName("com.apple.screencapture")?["location"] as? String {
-            var isDir: ObjCBool = false
-            if NSFileManager.defaultManager().fileExistsAtPath(dir, isDirectory: &isDir) {
-                return dir
+    
+    var screenshotLocationPath: String {
+        // Check for custom screenshot location chosen by user
+        if let customLocation = NSUserDefaults.standardUserDefaults().persistentDomainForName("com.apple.screencapture")?["location"] as? String {
+            // Check that the chosen directory exists, otherwise screencapture will not use it
+            var isDir = ObjCBool(false)
+            if NSFileManager.defaultManager().fileExistsAtPath(customLocation, isDirectory: &isDir) && isDir {
+                return customLocation
             }
         }
-        return NSSearchPathForDirectoriesInDomains(.DesktopDirectory, .UserDomainMask, true)[0] as String
+        // If a custom location is not defined (or invalid) return the default screenshot location (~/Desktop)
+        return NSSearchPathForDirectoriesInDomains(.DesktopDirectory, .UserDomainMask, true)[0] as! String
     }
 }
 
 protocol ScreenshotMonitorDelegate {
-    func screenshotDetected(pathToImage: String)
+    func screenshotDetected(imagePath: String)
 }

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:mac2imgur.xcodeproj">
+      location = "self:ScreamShot.xcodeproj">
    </FileRef>
 </Workspace>

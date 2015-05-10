@@ -1,16 +1,16 @@
 import Cocoa
 
 class MenuView: NSView, NSMenuDelegate {
-    var highlight = false
+    var _highlight = false
     var isActive = false
-    var progress = 0.0
+    var _progress = 0.0
     
     // NSVariableStatusItemLength == -1
     // Not using symbol because it doesn't link properly in Swift
     let statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
     // MARK: Initializers
     
-    override init() {
+    init() {
         super.init(frame: NSMakeRect(0, 0, 24, 24))
         
         registerForDraggedTypes([NSFilenamesPboardType])
@@ -31,8 +31,8 @@ class MenuView: NSView, NSMenuDelegate {
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
         frame = dirtyRect
-        statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: highlight)
-        if highlight{
+        statusItem.drawStatusBarBackgroundInRect(dirtyRect, withHighlight: _highlight)
+        if _highlight{
             NSColor.selectedMenuItemColor().setFill()
         }else{
             NSColor.clearColor().setFill()
@@ -41,7 +41,7 @@ class MenuView: NSView, NSMenuDelegate {
         (isActive ? "🚀" : "📷").drawInRect(CGRectOffset(dirtyRect, 4, -1), withAttributes: [NSFontAttributeName: NSFont.menuBarFontOfSize(13)])
         var width = dirtyRect.size.width
         var height = dirtyRect.size.height
-        var mySimpleRect: NSRect = NSMakeRect(0, 1, width*CGFloat(progress), 3)
+        var mySimpleRect: NSRect = NSMakeRect(0, 1, width*CGFloat(_progress), 3)
         NSColor.grayColor().set()
         NSRectFill(mySimpleRect)
     }
@@ -52,11 +52,11 @@ class MenuView: NSView, NSMenuDelegate {
         statusItem.popUpStatusItemMenu(menu!)
     }
     
-    func menuWillOpen(menu: NSMenu!) {
+    func menuWillOpen(menu: NSMenu) {
         setHighlight(true)
     }
     
-    func menuDidClose(menu: NSMenu!) {
+    func menuDidClose(menu: NSMenu) {
         setHighlight(false)
     }
     // MARK: Dragging
@@ -67,11 +67,11 @@ class MenuView: NSView, NSMenuDelegate {
     
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let pboard = sender.draggingPasteboard()
-        if contains(pboard.types as [NSString], NSFilenamesPboardType) {
-            let files = pboard.propertyListForType(NSFilenamesPboardType) as [String]
-            let appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+        if contains(pboard.types as! [NSString], NSFilenamesPboardType) {
+            let files = pboard.propertyListForType(NSFilenamesPboardType) as! [String]
+            let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
             for file in files{
-                let upload = Upload(app: appDelegate, pathToImage: file, isScreenshot: false, delegate: appDelegate)
+                let upload = Upload(app: appDelegate, imagePath: file, isScreenshot: false, delegate: appDelegate)
                 appDelegate.uploadController.addToQueue(upload)
             }
         }
@@ -84,12 +84,12 @@ class MenuView: NSView, NSMenuDelegate {
     }
     
     func setHighlight(status: Bool){
-        needsDisplay = (highlight != status)
-        highlight = status
+        needsDisplay = (self._highlight != status)
+        self._highlight = status
     }
     
     func setProgress(progress: Double){
-        needsDisplay = (self.progress != progress)
-        self.progress = progress
+        needsDisplay = (self._progress != progress)
+        self._progress = progress
     }
 }

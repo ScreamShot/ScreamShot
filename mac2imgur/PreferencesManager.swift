@@ -34,7 +34,7 @@ class PreferencesManager {
     
     private func getString(key: String, def: String?) -> String? {
         if hasKey(key) {
-            return (userDefaults.objectForKey(key) as String)
+            return (userDefaults.objectForKey(key) as! String)
         } else {
             return def
         }

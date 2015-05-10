@@ -17,7 +17,7 @@
                BlueprintIdentifier = "02FDC2CA194DF89D00E8CBC9"
                BuildableName = "ScreamShot.app"
                BlueprintName = "ScreamShot"
-               ReferencedContainer = "container:mac2imgur.xcodeproj">
+               ReferencedContainer = "container:ScreamShot.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "02FDC2CA194DF89D00E8CBC9"
             BuildableName = "ScreamShot.app"
             BlueprintName = "ScreamShot"
-            ReferencedContainer = "container:mac2imgur.xcodeproj">
+            ReferencedContainer = "container:ScreamShot.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "02FDC2CA194DF89D00E8CBC9"
             BuildableName = "ScreamShot.app"
             BlueprintName = "ScreamShot"
-            ReferencedContainer = "container:mac2imgur.xcodeproj">
+            ReferencedContainer = "container:ScreamShot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,7 +79,7 @@
             BlueprintIdentifier = "02FDC2CA194DF89D00E8CBC9"
             BuildableName = "ScreamShot.app"
             BlueprintName = "ScreamShot"
-            ReferencedContainer = "container:mac2imgur.xcodeproj">
+            ReferencedContainer = "container:ScreamShot.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -15,25 +15,32 @@
 */
 
 import Cocoa
+import Foundation
 
+extension NSMenuItem {
+    var data: AnyObject { return self }
+}
+
+@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate, ScreenshotMonitorDelegate, UploadControllerDelegate {
     
     @IBOutlet weak var menu: NSMenu!
-    let menuView = MenuView()
     @IBOutlet weak var deleteAfterUploadOption: NSMenuItem!
     @IBOutlet weak var launchAtStartup: NSMenuItem!
     @IBOutlet weak var disableDetectionOption: NSMenuItem!
+    @IBOutlet weak var lastItems: NSMenuItem!
+    @IBOutlet weak var copyLastLink: NSMenuItem!
     
+    let menuView = MenuView()
     var prefs: PreferencesManager!
     var monitor: ScreenshotMonitor!
     var uploadController: UploadController!
     var authController: ConfigurationWindowController!
-    var lastLink: String = ""
     
     
     // Delegate methods
     
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
         prefs = PreferencesManager()
         uploadController = UploadController(pref: prefs)
@@ -44,48 +51,88 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         
         deleteAfterUploadOption.state = prefs.shouldDeleteAfterUpload() ? NSOnState : NSOffState
         disableDetectionOption.state = prefs.isDetectionDisabled() ? NSOnState : NSOffState
-        launchAtStartup.state = (applicationIsInStartUpItems()) ? NSOnState : NSOffState
+        launchAtStartup.state = (LaunchServicesHelper.applicationIsInStartUpItems) ? NSOnState : NSOffState
         
         // Start monitoring for screenshots
         monitor = ScreenshotMonitor(delegate: self)
+        monitor.startMonitoring()
     }
     
-    func applicationWillTerminate(aNotification: NSNotification?) {
+    func applicationWillTerminate(aNotification: NSNotification) {
         NSStatusBar.systemStatusBar().removeStatusItem(menuView.statusItem)
         println("Monitor stop")
         monitor.query.stopQuery()
     }
     
-    func screenshotDetected(pathToImage: String) {
+    func screenshotDetected(imagePath: String) {
         if !prefs.isDetectionDisabled() {
             menuView.setUploading(true)
-            let upload = Upload(app: self, pathToImage: pathToImage, isScreenshot: true, delegate: self)
+            let upload = Upload(app: self, imagePath: imagePath, isScreenshot: true, delegate: self)
             uploadController.addToQueue(upload)
+        }
+        
+    }
+    
+    func getMimetype(filePath: NSURL) -> String{
+        var UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, filePath.pathExtension as NSString?, nil);
+        var str = UTTypeCopyPreferredTagWithClass(UTI.takeUnretainedValue(), kUTTagClassMIMEType);
+        if (str == nil) {
+            return "application/octet-stream";
+        } else {
+            return str.takeUnretainedValue() as String
         }
     }
     
-    func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, pathToImage: String) {
-        let type = isScreenshot ? "Screenshot" : "Image"
+    func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, imagePath: String) {
+        var type = isScreenshot ? "Screenshot" : "Image"
+        var url = NSURL(fileURLWithPath: imagePath)!
+        let mimeType = getMimetype(url)
+        let fileName = url.path?.lastPathComponent
+        var nsm = NSMenuItem(title: fileName!, action:"copyLink:", keyEquivalent:"")
+        if mimeType.rangeOfString("image/") != nil {
+            println("IMAGE")
+            nsm.image = NSImage(data: resizeImageForMenu(NSImage(contentsOfFile: imagePath)!)!)
+        }else{
+            println("NOT IMAGE :(")
+        }
+        nsm.enabled = true
+        nsm.target = self
+        nsm.representedObject = link
+        let items = lastItems!.submenu!.itemArray
+        lastItems!.submenu!.addItem(nsm)
+        if items.count > 5{
+            for index in 0...(items.count-5) {
+                let itemMenu = items[index] as! NSMenuItem
+                println("Remove lastItem \(itemMenu.title)")
+                lastItems!.submenu!.removeItem(itemMenu)
+            }
+        }
         if successful {
-            lastLink = link
             copyToClipboard(link)
+            copyLastLink.representedObject = link
             displayNotification("\(type) uploaded successfully!", informativeText: link)
             
             let deleteAfterUpload = prefs.shouldDeleteAfterUpload()
             if isScreenshot && deleteAfterUpload {
-                println("Deleting screenshot @ \(pathToImage)")
-                deleteFile(pathToImage)
+                println("Deleting screenshot @ \(imagePath)")
+                deleteFile(imagePath)
             }
         } else {
             displayNotification("\(type) upload failed...", informativeText: "")
         }
+    
     }
     
-    func userNotificationCenter(center: NSUserNotificationCenter, didActivateNotification notification: NSUserNotification!) {
+    @objc @IBAction func copyLink(item: NSMenuItem){
+        copyToClipboard(item.representedObject as! String!)
+    }
+    
+    func userNotificationCenter(center: NSUserNotificationCenter, didActivateNotification notification: NSUserNotification) {
         if notification.informativeText != "" {
             openURL(notification.informativeText!)
         }
     }
+   
     
     @IBAction func accountAction(sender: NSMenuItem) {
         authController = ConfigurationWindowController(windowNibName: "ConfigurationWindow")
@@ -105,23 +152,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         panel.prompt = "Upload"
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
-        if panel.runModal() == NSOKButton {
+        if panel.runModal() == NSModalResponseOK {
             for imageURL in panel.URLs {
-                if let path = (imageURL as NSURL).path? {
-                    let upload = Upload(app: self, pathToImage: path, isScreenshot: false, delegate: self)
+                if let path = (imageURL as! NSURL).path{
+                    let upload = Upload(app: self, imagePath: path, isScreenshot: false, delegate: self)
                     uploadController.addToQueue(upload)
                 }
             }
         }
     }
     
-    @IBAction func copyLastLink(sender: NSMenuItem) {
-        copyToClipboard(lastLink)
-    }
-    
     @IBAction func toggleStartup(sender: NSMenuItem) {
-        toggleLaunchAtStartup()
-        launchAtStartup.state = (applicationIsInStartUpItems()) ? NSOnState : NSOffState
+        LaunchServicesHelper.toggleLaunchAtStartup()
+        launchAtStartup.state = (LaunchServicesHelper.applicationIsInStartUpItems) ? NSOnState : NSOffState
     }
     
     @IBAction func deleteAfterUploadOption(sender: NSMenuItem) {
@@ -139,6 +182,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         prefs.setDetectionDisabled(disabled)
         if !disabled {
             sender.state = NSOffState
+            monitor.startMonitoring()
         } else {
             sender.state = NSOnState
         }
@@ -152,9 +196,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         pasteBoard.setString(string, forType: NSStringPboardType)
     }
     
-    func deleteFile(pathToFile: String) {
+    func deleteFile(filePath: String) {
         var error: NSError?
-        NSFileManager.defaultManager().removeItemAtPath(pathToFile, error: &error)
+        NSFileManager.defaultManager().removeItemAtPath(filePath, error: &error)
         if error != nil {
             NSLog(error!.localizedDescription)
         }
@@ -176,66 +220,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         menuView.setUploading(isActive)
     }
     
-    func applicationIsInStartUpItems() -> Bool {
-        return (itemReferencesInLoginItems().existingReference != nil)
-    }
-    
-    func itemReferencesInLoginItems() -> (existingReference: LSSharedFileListItemRef?, lastReference: LSSharedFileListItemRef?) {
-        var itemUrl : UnsafeMutablePointer<Unmanaged<CFURL>?> = UnsafeMutablePointer<Unmanaged<CFURL>?>.alloc(1)
-        if let appUrl : NSURL = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
-            let loginItemsRef = LSSharedFileListCreate(
-                nil,
-                kLSSharedFileListSessionLoginItems.takeRetainedValue(),
-                nil
-                ).takeRetainedValue() as LSSharedFileListRef?
-            if loginItemsRef != nil {
-                let loginItems: NSArray = LSSharedFileListCopySnapshot(loginItemsRef, nil).takeRetainedValue() as NSArray
-                let lastItemRef: LSSharedFileListItemRef = loginItems.lastObject as LSSharedFileListItemRef
-                for var i = 0; i < loginItems.count; ++i {
-                    let currentItemRef: LSSharedFileListItemRef = loginItems.objectAtIndex(i) as LSSharedFileListItemRef
-                    if LSSharedFileListItemResolve(currentItemRef, 0, itemUrl, nil) == noErr {
-                        if let urlRef: NSURL =  itemUrl.memory?.takeRetainedValue() {
-                            if urlRef.isEqual(appUrl) {
-                                return (currentItemRef, lastItemRef)
-                            }
-                        }
-                    }
-                }
-                //The application was not found in the startup list
-                return (nil, lastItemRef)
-            }
+    func resizeImageForMenu(image: NSImage) -> NSData? {
+        let scaleFactor = CGFloat(22/max(image.size.width, image.size.height))
+        let resizedBounds = NSRect(x: 0, y: 0, width: round(image.size.width * scaleFactor), height: round(image.size.height * scaleFactor))
+            
+        // Only resize the image if a change in size will occur
+        if !NSEqualSizes(resizedBounds.size, image.size) {
+            let resizedImage = NSImage(size: resizedBounds.size)
+            let imageRep = image.bestRepresentationForRect(resizedBounds, context: nil, hints: nil)!
+                
+            resizedImage.lockFocus()
+            imageRep.drawInRect(resizedBounds)
+            resizedImage.unlockFocus()
+                
+            // Use a PNG representation of the resized image
+            return NSBitmapImageRep(data: resizedImage.TIFFRepresentation!)!.representationUsingType(NSBitmapImageFileType.NSPNGFileType, properties: [:])!
         }
-        return (nil, nil)
-    }
-    
-    func toggleLaunchAtStartup() {
-        let itemReferences = itemReferencesInLoginItems()
-        let shouldBeToggled = (itemReferences.existingReference == nil)
-        let loginItemsRef = LSSharedFileListCreate(
-            nil,
-            kLSSharedFileListSessionLoginItems.takeRetainedValue(),
-            nil
-            ).takeRetainedValue() as LSSharedFileListRef?
-        if loginItemsRef != nil {
-            if shouldBeToggled {
-                if let appUrl : CFURLRef = NSURL.fileURLWithPath(NSBundle.mainBundle().bundlePath) {
-                    LSSharedFileListInsertItemURL(
-                        loginItemsRef,
-                        itemReferences.lastReference,
-                        nil,
-                        nil,
-                        appUrl,
-                        nil,
-                        nil
-                    )
-                    println("Application was added to login items")
-                }
-            } else {
-                if let itemRef = itemReferences.existingReference {
-                    LSSharedFileListItemRemove(loginItemsRef,itemRef);
-                    println("Application was removed from login items")
-                }
-            }
-        }
+        return nil;
     }
 }

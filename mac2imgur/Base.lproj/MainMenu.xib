@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -14,27 +13,33 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ScreamShot" customModuleProvider="target">
             <connections>
+                <outlet property="copyLastLink" destination="fLq-E7-ss8" id="2Zz-gY-Rth"/>
                 <outlet property="deleteAfterUploadOption" destination="Hcu-OJ-uxu" id="0bW-Sw-X6s"/>
                 <outlet property="disableDetectionOption" destination="8W0-Wi-U05" id="T4x-qP-cgE"/>
+                <outlet property="lastItems" destination="nht-Dg-NbL" id="7Gk-ED-7ca"/>
                 <outlet property="launchAtStartup" destination="KPZ-iB-rTK" id="XHW-en-Yce"/>
                 <outlet property="menu" destination="Qba-hr-jWV" id="gnm-M9-Vwq"/>
             </connections>
         </customObject>
         <menu id="Qba-hr-jWV">
             <items>
-                <menuItem title="Select files" id="d5R-Ji-SH4">
+                <menuItem title="Select files" keyEquivalent="s" id="d5R-Ji-SH4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="selectImages:" target="Voe-Tx-rLC" id="cfe-EI-jrC"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Copy last link" id="fLq-E7-ss8">
+                <menuItem title="Copy last link" keyEquivalent="c" id="fLq-E7-ss8">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="copyLastLink:" target="Voe-Tx-rLC" id="H0u-6J-Z3r"/>
+                        <action selector="copyLink:" target="Voe-Tx-rLC" id="x9K-p9-yYw"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="m8J-uo-3rd"/>
+                <menuItem title="Recent items" id="nht-Dg-NbL">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Recent items" id="db1-hj-6Iv"/>
+                </menuItem>
                 <menuItem title="Options" id="End-bd-yda">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Options" id="1Si-it-hd3">
@@ -68,8 +73,7 @@
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="e83-b6-pER"/>
-                <menuItem title="Quit" id="nTb-az-bhw">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Quit" keyEquivalent="q" id="nTb-az-bhw">
                     <connections>
                         <action selector="terminate:" target="-2" id="d5k-Eo-mpb"/>
                     </connections>
@@ -77,16 +81,9 @@
             </items>
             <point key="canvasLocation" x="284.5" y="326.5"/>
         </menu>
-        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="jd5-kx-zWJ">
-            <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="JP5-zV-9rp">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-            </textFieldCell>
-            <point key="canvasLocation" x="531" y="398.5"/>
-        </textField>
         <userDefaultsController representsSharedInstance="YES" id="NtC-xR-LN2"/>
+        <menuItem title="Item" id="8Me-Qd-ayO">
+            <modifierMask key="keyEquivalentModifierMask"/>
+        </menuItem>
     </objects>
 </document>
