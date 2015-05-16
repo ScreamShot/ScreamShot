@@ -17,13 +17,17 @@
 import Foundation
 
 class UploadController {
-    var pref: PreferencesManager
+    var uploadUrl: String!
     var uploadQueue: [Upload]
     var uploading = false
     
-    init(pref: PreferencesManager) {
+    init(uploadUrl: String) {
         self.uploadQueue = []
-        self.pref = pref
+        self.uploadUrl = uploadUrl
+    }
+    
+    func setUploadUrl(uploadUrl: String){
+        self.uploadUrl = uploadUrl;
     }
     
     func addToQueue(upload: Upload) {
@@ -35,13 +39,13 @@ class UploadController {
     
     func next(){
         uploading = false
-        if uploadQueue.count == 0{
+        if uploadQueue.count == 0 {
             uploadQueue.removeAll(keepCapacity: false)
         } else {
             uploading = true
             let upload = uploadQueue[uploadQueue.count-1]
             uploadQueue.removeAtIndex(uploadQueue.count-1)
-            upload.attemptUpload(self.pref.getUploadUrl())
+            upload.attemptUpload(uploadUrl)
         }
     }
 }

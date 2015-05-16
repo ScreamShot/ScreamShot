@@ -75,7 +75,7 @@
                 <menuItem isSeparatorItem="YES" id="e83-b6-pER"/>
                 <menuItem title="Quit" keyEquivalent="q" id="nTb-az-bhw">
                     <connections>
-                        <action selector="terminate:" target="-2" id="d5k-Eo-mpb"/>
+                        <action selector="terminate:" target="-2" id="32z-fU-f1A"/>
                     </connections>
                 </menuItem>
             </items>

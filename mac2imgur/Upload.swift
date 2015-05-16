@@ -15,73 +15,85 @@
 */
 
 import Foundation
+import ScreamUtils
 
-class Upload {
-    let boundary: String = "---------------------\(arc4random())\(arc4random())" // Random boundary
-    var imagePath: String
-    var isScreenshot: Bool
-    var delegate: UploadControllerDelegate
-    var app: AppDelegate
+public class Upload: NSObject {
+    let boundary: String = "---------------------\(arc4random())\(arc4random())"; // Random boundary;
+    var filePath = "";
+    var successCallback: Array<((String)->())> = [];
+    var errorCallback: Array<((String)->())> = [];
+    var progressCallback: Array<((Double)->())> = [];
+    var startingCallback: Array<(()->())> = [];
     
-    init(app: AppDelegate, imagePath: String, isScreenshot: Bool, delegate: UploadControllerDelegate) {
-        self.imagePath = imagePath
-        self.isScreenshot = isScreenshot
-        self.delegate = delegate
-        self.app = app
+    public init(filePath: String) {
+        self.filePath = filePath;
+    }
+    
+    func addErrorCallback(callback: (String)->()){
+        errorCallback.append(callback);
+    }
+    
+    func addSuccessCallback(callback: (String)->()){
+        successCallback.append(callback);
+    }
+    
+    func addProgressCallback(callback: (Double)->()){
+        progressCallback.append(callback);
+    }
+    
+    func addStartingCallback(callback: ()->()){
+        startingCallback.append(callback);
     }
     
     func attemptUpload(uploaderUrl: String) {
-        println("Uploading image.")
-        app.updateStatusIcon(true)
+        let fileURL: NSURL = NSURL(fileURLWithPath: filePath)!;
+        let imageData: NSData = NSData(contentsOfURL: fileURL, options: nil, error: nil)!;
         
-        let fileURL: NSURL = NSURL(fileURLWithPath: imagePath)!
-        let imageData: NSData = NSData(contentsOfURL: fileURL, options: nil, error: nil)!
-        
-        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: uploaderUrl)!)
-        mutableURLRequest.HTTPMethod = Method.POST.rawValue
-        let uploadData = NSMutableData()
-        let requestBody = NSMutableData()
-        let contentType = "multipart/form-data; boundary=\(boundary)"
-        mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+        var mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: uploaderUrl)!);
+        mutableURLRequest.HTTPMethod = Method.POST.rawValue;
+        let uploadData = NSMutableData();
+        let requestBody = NSMutableData();
+        let contentType = "multipart/form-data; boundary=\(boundary)";
+        mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type");
         
         // Add image data
-        requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(imagePath.lastPathComponent)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        requestBody.appendData("--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding)!);
+        requestBody.appendData("Content-Disposition: attachment; name=\"image\"; filename=\".\(filePath.lastPathComponent)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding)!);
         
-        requestBody.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
-        requestBody.appendData(imageData)
-        requestBody.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
+        requestBody.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding)!);
+        requestBody.appendData(imageData);
+        requestBody.appendData("\r\n".dataUsingEncoding(NSUTF8StringEncoding)!);
         
         requestBody.appendData("--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding)!)
         
         upload(mutableURLRequest, requestBody)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                self.setProgress(Double(totalBytesWritten)/Double(totalBytesExpectedToWrite))
+                for callback in self.progressCallback{
+                    callback(Double(totalBytesWritten)/Double(totalBytesExpectedToWrite));
+                }
             }
             .responseJSON { (request, response, _JSON, error) -> () in
+                print(error);
                 if error != nil {
                     NSLog(error!.localizedDescription);
-                    self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", imagePath: self.imagePath)
+                    let message = error?.localizedDescription;
+                    for callback in self.errorCallback{
+                        callback(message!);
+                    }
                 } else {
                     var JSON = _JSON as! NSDictionary!
-                    println("Received response: \(JSON)")
+                    println("Received response: \(JSON)");
                     if (JSON.valueForKey("success") != nil && JSON.valueForKey("success") as! Bool) {
-                        self.delegate.uploadAttemptCompleted(true, isScreenshot: self.isScreenshot, link: JSON.valueForKey("link") as! String, imagePath: self.imagePath)
+                        for callback in self.successCallback{
+                            callback(JSON.valueForKey("link") as! String);
+                        }
                     } else {
                         NSLog("An error occurred: %@", JSON);
-                        self.delegate.uploadAttemptCompleted(false, isScreenshot: self.isScreenshot, link: "", imagePath: self.imagePath)
+                        for callback in self.errorCallback{
+                            callback(String(format: "%@", JSON));
+                        }
                     }
                 }
-            self.app.uploadController.next()
-            self.app.updateStatusIcon(false)
-            self.setProgress(0)
         }
     }
-    func setProgress(progress: Double){
-        self.app.menuView.setProgress(progress)
-    }
-}
-
-protocol UploadControllerDelegate {
-    func uploadAttemptCompleted(successful: Bool, isScreenshot: Bool, link: String, imagePath: String)
 }

@@ -17,7 +17,7 @@
 import Foundation
 
 enum PreferencesConstant: String {
-    case refreshToken = "RefreshToken", uploadUrl = "url", deleteScreenshotAfterUpload = "DeleteScreenshotAfterUpload", disableScreenshotDetection = "DisableScreenshotDetection"
+    case uploadUrl = "url", deleteScreenshotAfterUpload = "DeleteScreenshotAfterUpload", disableScreenshotDetection = "DisableScreenshotDetection"
 }
 
 class PreferencesManager {

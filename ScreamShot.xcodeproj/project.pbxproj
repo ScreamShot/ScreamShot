@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0220B2AB19F4104A0064E9FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B2AA19F4104A0064E9FE /* AppDelegate.swift */; };
 		022321BF19A6959500048626 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 022321BE19A6959500048626 /* LICENSE */; };
-		023ACBEA1A2A9ABF008510AC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */; };
 		024130DA1A05157E0062E9D3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B42AE619AB75DA00A6349D /* AppKit.framework */; };
 		028DC13D19FBBF6200833F97 /* UploadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028DC13C19FBBF6200833F97 /* UploadController.swift */; };
 		02B00A7519CE388800F924D6 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B00A7419CE388800F924D6 /* PreferencesManager.swift */; };
@@ -19,17 +18,65 @@
 		07F6F73B19ABE6A600BDEB11 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F6F73A19ABE6A600BDEB11 /* Upload.swift */; };
 		3C470B8F1A4F5EF10013136B /* ConfigurationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */; };
 		3C470B911A4F5F3E0013136B /* ConfigurationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */; };
+		3C563BAD1B0212D70031213A /* ScreamSend.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C563B961B0212D70031213A /* ScreamSend.framework */; };
+		3C563BAE1B0212D70031213A /* ScreamSend.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C563B961B0212D70031213A /* ScreamSend.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C563BD21B02133B0031213A /* ScreamUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C563BBB1B02133B0031213A /* ScreamUtils.framework */; };
+		3C563BD31B02133B0031213A /* ScreamUtils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C563BBB1B02133B0031213A /* ScreamUtils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3C563BDB1B021A250031213A /* ScreamUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C563BDA1B021A250031213A /* ScreamUtils.swift */; };
+		3C563BDC1B025DCB0031213A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */; };
 		3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C66F87C1A504A1D00C8A449 /* MenuView.swift */; };
 		3CE4D0CE1AA49B8B000EB775 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE4D0CD1AA49B8B000EB775 /* Alamofire.swift */; };
 		3CF885161AFA9A1D00D2F353 /* LaunchServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3C563BAB1B0212D70031213A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02FDC2C3194DF89D00E8CBC9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C563B951B0212D70031213A;
+			remoteInfo = ScreamSend;
+		};
+		3C563BD01B02133B0031213A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02FDC2C3194DF89D00E8CBC9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C563BBA1B02133B0031213A;
+			remoteInfo = ScreamUtils;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3C563B901B0211A00031213A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563BB21B0212D70031213A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C563BAE1B0212D70031213A /* ScreamSend.framework in Embed Frameworks */,
+				3C563BD31B02133B0031213A /* ScreamUtils.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0220B2AA19F4104A0064E9FE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		022321BE19A6959500048626 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		022321C019A6F57E00048626 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		026E43D71A07E87300A08FC3 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		028DC13C19FBBF6200833F97 /* UploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadController.swift; sourceTree = "<group>"; };
+		028DC13C19FBBF6200833F97 /* UploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadController.swift; path = ../mac2imgur/UploadController.swift; sourceTree = "<group>"; };
 		02B00A7419CE388800F924D6 /* PreferencesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		02B00A7619CE38AF00F924D6 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotMonitor.swift; sourceTree = "<group>"; };
@@ -38,14 +85,19 @@
 		02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02FDC2D7194DF89D00E8CBC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		07B42AE619AB75DA00A6349D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		07F6F73A19ABE6A600BDEB11 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		07F6F73A19ABE6A600BDEB11 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Upload.swift; path = ../mac2imgur/Upload.swift; sourceTree = "<group>"; };
 		3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationWindow.xib; sourceTree = "<group>"; };
 		3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationWindowController.swift; sourceTree = "<group>"; };
 		3C470B941A4F73DB0013136B /* mac2imgur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = mac2imgur.entitlements; sourceTree = "<group>"; };
 		3C534B191AA368EE00399000 /* ScreamShot.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ScreamShot.entitlements; sourceTree = "<group>"; };
+		3C563B961B0212D70031213A /* ScreamSend.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScreamSend.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C563B991B0212D70031213A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C563BBB1B02133B0031213A /* ScreamUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScreamUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C563BBE1B02133B0031213A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3C563BDA1B021A250031213A /* ScreamUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreamUtils.swift; sourceTree = "<group>"; };
 		3C66F87C1A504A1D00C8A449 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		3CE4D0CD1AA49B8B000EB775 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
-		3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchServicesHelper.swift; sourceTree = "<group>"; };
+		3CE4D0CD1AA49B8B000EB775 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../mac2imgur/Alamofire.swift; sourceTree = "<group>"; };
+		3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchServicesHelper.swift; path = ../mac2imgur/LaunchServicesHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +105,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C563BD21B02133B0031213A /* ScreamUtils.framework in Frameworks */,
 				024130DA1A05157E0062E9D3 /* AppKit.framework in Frameworks */,
+				3C563BAD1B0212D70031213A /* ScreamSend.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563B921B0212D70031213A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563BB71B02133B0031213A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				02FDC2CB194DF89D00E8CBC9 /* ScreamShot.app */,
+				3C563B961B0212D70031213A /* ScreamSend.framework */,
+				3C563BBB1B02133B0031213A /* ScreamUtils.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,16 +165,14 @@
 			children = (
 				3C470B941A4F73DB0013136B /* mac2imgur.entitlements */,
 				02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */,
+				3C563B971B0212D70031213A /* ScreamSend */,
+				3C563BBC1B02133B0031213A /* ScreamUtils */,
 				02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */,
 				3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */,
 				3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */,
 				02FDC2CE194DF89D00E8CBC9 /* Supporting Files */,
-				028DC13C19FBBF6200833F97 /* UploadController.swift */,
 				3C66F87C1A504A1D00C8A449 /* MenuView.swift */,
-				07F6F73A19ABE6A600BDEB11 /* Upload.swift */,
 				02B00A7419CE388800F924D6 /* PreferencesManager.swift */,
-				3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */,
-				3CE4D0CD1AA49B8B000EB775 /* Alamofire.swift */,
 				02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */,
 				0220B2AA19F4104A0064E9FE /* AppDelegate.swift */,
 			);
@@ -121,7 +189,63 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3C563B971B0212D70031213A /* ScreamSend */ = {
+			isa = PBXGroup;
+			children = (
+				07F6F73A19ABE6A600BDEB11 /* Upload.swift */,
+				028DC13C19FBBF6200833F97 /* UploadController.swift */,
+				3C563B981B0212D70031213A /* Supporting Files */,
+			);
+			name = ScreamSend;
+			path = ../ScreamSend;
+			sourceTree = "<group>";
+		};
+		3C563B981B0212D70031213A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3C563B991B0212D70031213A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3C563BBC1B02133B0031213A /* ScreamUtils */ = {
+			isa = PBXGroup;
+			children = (
+				3CE4D0CD1AA49B8B000EB775 /* Alamofire.swift */,
+				3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */,
+				3C563BDA1B021A250031213A /* ScreamUtils.swift */,
+				3C563BBD1B02133B0031213A /* Supporting Files */,
+			);
+			name = ScreamUtils;
+			path = ../ScreamUtils;
+			sourceTree = "<group>";
+		};
+		3C563BBD1B02133B0031213A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3C563BBE1B02133B0031213A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3C563B931B0212D70031213A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563BB81B02133B0031213A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		02FDC2CA194DF89D00E8CBC9 /* ScreamShot */ = {
@@ -132,15 +256,55 @@
 				02FDC2C8194DF89D00E8CBC9 /* Frameworks */,
 				02236F3719D85668000CEAC3 /* Update CFBundleVersion */,
 				02FDC2C9194DF89D00E8CBC9 /* Resources */,
+				3C563B901B0211A00031213A /* Embed App Extensions */,
+				3C563BB21B0212D70031213A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3C563BAC1B0212D70031213A /* PBXTargetDependency */,
+				3C563BD11B02133B0031213A /* PBXTargetDependency */,
 			);
 			name = ScreamShot;
 			productName = mac2imgur;
 			productReference = 02FDC2CB194DF89D00E8CBC9 /* ScreamShot.app */;
 			productType = "com.apple.product-type.application";
+		};
+		3C563B951B0212D70031213A /* ScreamSend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C563BAF1B0212D70031213A /* Build configuration list for PBXNativeTarget "ScreamSend" */;
+			buildPhases = (
+				3C563B911B0212D70031213A /* Sources */,
+				3C563B921B0212D70031213A /* Frameworks */,
+				3C563B931B0212D70031213A /* Headers */,
+				3C563B941B0212D70031213A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScreamSend;
+			productName = ScreamSend;
+			productReference = 3C563B961B0212D70031213A /* ScreamSend.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3C563BBA1B02133B0031213A /* ScreamUtils */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C563BD41B02133B0031213A /* Build configuration list for PBXNativeTarget "ScreamUtils" */;
+			buildPhases = (
+				3C563BB61B02133B0031213A /* Sources */,
+				3C563BB71B02133B0031213A /* Frameworks */,
+				3C563BB81B02133B0031213A /* Headers */,
+				3C563BB91B02133B0031213A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ScreamUtils;
+			productName = ScreamUtils;
+			productReference = 3C563BBB1B02133B0031213A /* ScreamUtils.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -163,6 +327,14 @@
 							};
 						};
 					};
+					3C563B951B0212D70031213A = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = YN8V4S3Q4C;
+					};
+					3C563BBA1B02133B0031213A = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = YN8V4S3Q4C;
+					};
 				};
 			};
 			buildConfigurationList = 02FDC2C6194DF89D00E8CBC9 /* Build configuration list for PBXProject "ScreamShot" */;
@@ -179,6 +351,8 @@
 			projectRoot = "";
 			targets = (
 				02FDC2CA194DF89D00E8CBC9 /* ScreamShot */,
+				3C563B951B0212D70031213A /* ScreamSend */,
+				3C563BBA1B02133B0031213A /* ScreamUtils */,
 			);
 		};
 /* End PBXProject section */
@@ -188,11 +362,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				023ACBEA1A2A9ABF008510AC /* MainMenu.xib in Resources */,
+				3C563BDC1B025DCB0031213A /* MainMenu.xib in Resources */,
 				02FDC2D5194DF89D00E8CBC9 /* Images.xcassets in Resources */,
 				022321BF19A6959500048626 /* LICENSE in Resources */,
 				02B00A7719CE38AF00F924D6 /* Credits.rtf in Resources */,
 				3C470B8F1A4F5EF10013136B /* ConfigurationWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563B941B0212D70031213A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563BB91B02133B0031213A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +420,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C563B911B0212D70031213A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C563BB61B02133B0031213A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C563BDB1B021A250031213A /* ScreamUtils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3C563BAC1B0212D70031213A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C563B951B0212D70031213A /* ScreamSend */;
+			targetProxy = 3C563BAB1B0212D70031213A /* PBXContainerItemProxy */;
+		};
+		3C563BD11B02133B0031213A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C563BBA1B02133B0031213A /* ScreamUtils */;
+			targetProxy = 3C563BD01B02133B0031213A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */ = {
@@ -356,6 +572,113 @@
 			};
 			name = Release;
 		};
+		3C563BB01B0212D70031213A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ScreamSend/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3C563BB11B0212D70031213A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ScreamSend/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3C563BD51B02133B0031213A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ScreamUtils/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3C563BD61B02133B0031213A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ScreamUtils/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -373,6 +696,24 @@
 			buildConfigurations = (
 				02FDC2E8194DF89D00E8CBC9 /* Debug */,
 				02FDC2E9194DF89D00E8CBC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C563BAF1B0212D70031213A /* Build configuration list for PBXNativeTarget "ScreamSend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C563BB01B0212D70031213A /* Debug */,
+				3C563BB11B0212D70031213A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C563BD41B02133B0031213A /* Build configuration list for PBXNativeTarget "ScreamUtils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C563BD51B02133B0031213A /* Debug */,
+				3C563BD61B02133B0031213A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
