@@ -2,7 +2,7 @@ osx_image: xcode7
 language: objective-c
 sudo: false
 
-script: xctool -project mac2imgur.xcodeproj -scheme mac2imgur build
+script: xctool -scheme ScreamShot build
 
 after_success:
 - zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/ScreamShot.app/
