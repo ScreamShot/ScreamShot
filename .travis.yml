@@ -5,7 +5,7 @@ sudo: false
 script: xctool -scheme ScreamShot build
 
 after_success:
-- zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/ScreamShot.app/
+- zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/*/Build/Products/Debug/ScreamShot.app/
 
 deploy:
   provider: releases
