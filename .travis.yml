@@ -17,4 +17,3 @@ deploy:
   skip_cleanup: true
   on:
     repo: ScreamShot/ScreamShot
-    tags: true
