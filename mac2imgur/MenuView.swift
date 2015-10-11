@@ -117,28 +117,35 @@ class MenuView: NSView, NSMenuDelegate {
         var isSvg = mimeType.rangeOfString("image/svg") != nil;
         // @TODO: Due to a bug, SVG can't be displayed with this method
         if canDisplay && !isSvg {
-            nsm.image = NSImage(data: resizeImageForMenu(NSImage(contentsOfFile: filePath)!)!);
+            if let image = NSImage(contentsOfFile: filePath){
+                if let icon = resizeImageForMenu(image) {
+                    nsm.image = NSImage(data: icon)
+                }
+            }
         }else{
-            println("NOT IMAGE :(");
+            println("NOT AN IMAGE :(");
         }
         nsm.enabled = true;
         nsm.target = self;
         nsm.representedObject = link;
+        
         var app = NSApplication.sharedApplication().delegate as! AppDelegate;
-        let items = app.lastItems!.submenu!.itemArray;
+        app.copyLastLink.representedObject = link;
+        
+        
         app.lastItems!.submenu!.addItem(nsm);
+        let items = app.lastItems!.submenu!.itemArray;
         if items.count > 5{
-            for index in 0...(items.count-5) {
-                let itemMenu = items[index] as! NSMenuItem;
-                println("Remove lastItem \(itemMenu.title)");
-                app.lastItems!.submenu!.removeItem(itemMenu);
-            }
-            for index in (items.count-4)...(items.count) {
-                let itemMenu = items[index] as! NSMenuItem;
-                itemMenu.enabled = true
+            let itemMenu = items[items.count - 6 ] as! NSMenuItem;
+            println("Remove lastItem \(itemMenu.title)");
+            app.lastItems!.submenu!.removeItem(itemMenu);
+            
+            for item in items {
+                if let itemMenu = item as? NSMenuItem{
+                    itemMenu.enabled = true
+                }
             }
         }
-        app.copyLastLink.representedObject = link;
     }
     
     

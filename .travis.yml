@@ -1,6 +1,18 @@
+osx_image: xcode7
 language: objective-c
-script: xctool -project mac2imgur.xcodeproj -scheme mac2imgur build
 sudo: false
+
+script: xctool -project mac2imgur.xcodeproj -scheme mac2imgur build
+
 after_success:
-  - "zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/ScreamShot.app/"
-  - "curl -F \"image=@ScreamShot.app.zip;filename=ScreamShot.app.zip\" $UPLOAD_URL"
+- zip -r ScreamShot.app.zip $HOME/Library/Developer/Xcode/DerivedData/mac2imgur-*/Build/Products/Debug/ScreamShot.app/
+
+deploy:
+  provider: releases
+  api_key:
+    secure: djdRLFhr1Txk0rrE5xUK2nYTbKBvA+p5nadRXCKygxo8lHnNNuGYFGYN1/wIMHdkTkl7uq76Ve2ytIp28Mgk+zYnQQ2h/a8qHjT6zvrzl6+jBNeyaQElNZ/Cf/qCqttidCI5FOaDQghqlE2Da7ERMwOvV901BUHof3DJWA88y7k=
+  file: ScreamShot.app.zip
+  skip_cleanup: true
+  on:
+    repo: ScreamShot/ScreamShot
+    tags: true
