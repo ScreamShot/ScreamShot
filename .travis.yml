@@ -4,7 +4,7 @@ sudo: false
 
 script: xctool -scheme ScreamShot build
 
-after_success:
+before_deploy:
 - mkdir ScreamShot.app/
 - cp -R $HOME/Library/Developer/Xcode/DerivedData/*/Build/Products/Debug/ScreamShot.app/ ScreamShot.app/
 - zip -r ScreamShot.app.zip ./ScreamShot.app/
