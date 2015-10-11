@@ -28,7 +28,11 @@ public func copyToClipboard(string: String) {
 
 public func deleteFile(filePath: String) {
     var error: NSError?;
-    NSFileManager.defaultManager().removeItemAtPath(filePath, error: &error);
+    do {
+        try NSFileManager.defaultManager().removeItemAtPath(filePath)
+    } catch let error1 as NSError {
+        error = error1
+    };
     if error != nil {
         NSLog(error!.localizedDescription);
     }
@@ -42,11 +46,11 @@ public func openURL(url: String) {
 
 
 public func getMimetype(filePath: NSURL) -> String{
-    var UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, filePath.pathExtension as NSString?, nil).takeUnretainedValue();
-    var str = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
+    let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (filePath.pathExtension as NSString?)!, nil)!.takeUnretainedValue();
+    let str = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
     if (str == nil) {
         return "application/octet-stream";
     } else {
-        return str.takeUnretainedValue() as String;
+        return str!.takeUnretainedValue() as String;
     }
 }

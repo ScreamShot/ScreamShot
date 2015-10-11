@@ -1,0 +1,3 @@
+[submodule "Just"]
+	path = Just
+	url = git@github.com:JustHTTP/Just.git
