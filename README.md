@@ -4,7 +4,7 @@ This project is based on [mileswd/mac2imgur](https://github.com/mileswd/mac2imgu
 
 ###Installation Instructions###
 
-[Download a release]() then simply drop the application into your 'Applications' folder.
+[Download a release](https://github.com/ScreamShot/ScreamShot/releases/latest) then simply drop the application into your 'Applications' folder.
 
 After opening it, you'll notice a small (hopefully unobtrusive) system tray icon:
 
