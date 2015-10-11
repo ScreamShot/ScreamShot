@@ -1,4 +1,4 @@
-ScreamShot [![Build Status](https://travis-ci.org/PunKeel/ScreamShot.svg?branch=master)](https://travis-ci.org/PunKeel/ScreamShot)
+ScreamShot [![Build Status](https://travis-ci.org/ScreamShot/ScreamShot.svg?branch=master)](https://travis-ci.org/ScreamShot/ScreamShot)
 ========
 This project is based on [mileswd/mac2imgur](https://github.com/mileswd/mac2imgur).
 
@@ -36,9 +36,9 @@ ScreamShot works by "listening" for new screenshots taken by the [built in scree
 
 ###Issues & Pull Requests###
 
-If something isn't working as expected or you have an idea for a new feature, feel free to [submit an issue](https://github.com/PunKeel/ScreamShot/issues).
+If something isn't working as expected or you have an idea for a new feature, feel free to [submit an issue](https://github.com/ScreamShot/ScreamShot/issues).
 
-On the same note, pull requests to fix issues, add features or simply to improve the codebase are greatly appreciated - [fork](https://github.com/PunKeel/ScreamShot/fork) away!
+On the same note, pull requests to fix issues, add features or simply to improve the codebase are greatly appreciated - [fork](https://github.com/ScreamShot/ScreamShot/fork) away!
 
 ---
 
@@ -46,4 +46,4 @@ On the same note, pull requests to fix issues, add features or simply to improve
 
 ScreamShot is a nonprofit, open source application.
 
-This software is released under a GPLv3 license. See [LICENSE](https://github.com/PunKeel/ScreamShot/blob/master/LICENSE) for more information.
+This software is released under a GPLv3 license. See [LICENSE](https://github.com/ScreamShot/ScreamShot/blob/master/LICENSE) for more information.
