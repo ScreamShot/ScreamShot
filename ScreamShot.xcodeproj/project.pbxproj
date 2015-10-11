@@ -104,7 +104,7 @@
 		022321BE19A6959500048626 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		022321C019A6F57E00048626 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		026E43D71A07E87300A08FC3 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		028DC13C19FBBF6200833F97 /* UploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadController.swift; path = ../ScreamShot/UploadController.swift; sourceTree = "<group>"; };
+		028DC13C19FBBF6200833F97 /* UploadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadController.swift; path = ../ScreamSend/UploadController.swift; sourceTree = "<group>"; };
 		02B00A7419CE388800F924D6 /* PreferencesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		02B00A7619CE38AF00F924D6 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotMonitor.swift; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		02FDC2D4194DF89D00E8CBC9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02FDC2D7194DF89D00E8CBC9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		07B42AE619AB75DA00A6349D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		07F6F73A19ABE6A600BDEB11 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Upload.swift; path = ../ScreamShot/Upload.swift; sourceTree = "<group>"; };
+		07F6F73A19ABE6A600BDEB11 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Upload.swift; path = ../ScreamSend/Upload.swift; sourceTree = "<group>"; };
 		3C470B8E1A4F5EF10013136B /* ConfigurationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigurationWindow.xib; sourceTree = "<group>"; };
 		3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationWindowController.swift; sourceTree = "<group>"; };
 		3C470B941A4F73DB0013136B /* mac2imgur.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = mac2imgur.entitlements; sourceTree = "<group>"; };
