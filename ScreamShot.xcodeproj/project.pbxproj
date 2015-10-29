@@ -24,8 +24,11 @@
 		3C563BD31B02133B0031213A /* ScreamUtils.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C563BBB1B02133B0031213A /* ScreamUtils.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C563BDB1B021A250031213A /* ScreamUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C563BDA1B021A250031213A /* ScreamUtils.swift */; };
 		3C563BDC1B025DCB0031213A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02FDC2D6194DF89D00E8CBC9 /* MainMenu.xib */; };
+		3C6638F91BE19CBF005D60AD /* OverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6638F81BE19CBF005D60AD /* OverlayWindow.swift */; };
+		3C6638FF1BE19CD3005D60AD /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C6638FE1BE19CD3005D60AD /* SelectionView.swift */; };
+		3C6639001BE25206005D60AD /* Just.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA1080F1BCA7FC400AA92F2 /* Just.framework */; };
+		3C6639011BE252A0005D60AD /* Just.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA1080F1BCA7FC400AA92F2 /* Just.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3C66F87D1A504A1D00C8A449 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C66F87C1A504A1D00C8A449 /* MenuView.swift */; };
-		3CA108121BCA7FD600AA92F2 /* Just.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CA1080F1BCA7FC400AA92F2 /* Just.framework */; };
 		3CF885161AFA9A1D00D2F353 /* LaunchServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +94,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3C6639011BE252A0005D60AD /* Just.framework in Embed Frameworks */,
 				3C563BAE1B0212D70031213A /* ScreamSend.framework in Embed Frameworks */,
 				3C563BD31B02133B0031213A /* ScreamUtils.framework in Embed Frameworks */,
 			);
@@ -123,6 +127,8 @@
 		3C563BBB1B02133B0031213A /* ScreamUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScreamUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C563BBE1B02133B0031213A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C563BDA1B021A250031213A /* ScreamUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreamUtils.swift; sourceTree = "<group>"; };
+		3C6638F81BE19CBF005D60AD /* OverlayWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayWindow.swift; sourceTree = "<group>"; };
+		3C6638FE1BE19CD3005D60AD /* SelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
 		3C66F87C1A504A1D00C8A449 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3CA108031BCA7FC400AA92F2 /* Just.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Just.xcodeproj; path = Just/Just.xcodeproj; sourceTree = "<group>"; };
 		3CF885151AFA9A1D00D2F353 /* LaunchServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LaunchServicesHelper.swift; path = ../ScreamShot/LaunchServicesHelper.swift; sourceTree = "<group>"; };
@@ -133,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C6639001BE25206005D60AD /* Just.framework in Frameworks */,
 				3C563BD21B02133B0031213A /* ScreamUtils.framework in Frameworks */,
 				024130DA1A05157E0062E9D3 /* AppKit.framework in Frameworks */,
 				3C563BAD1B0212D70031213A /* ScreamSend.framework in Frameworks */,
@@ -143,7 +150,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CA108121BCA7FD600AA92F2 /* Just.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,11 +208,12 @@
 				3C470B901A4F5F3E0013136B /* ConfigurationWindowController.swift */,
 				02FDC2CE194DF89D00E8CBC9 /* Supporting Files */,
 				3C66F87C1A504A1D00C8A449 /* MenuView.swift */,
+				3C6638F81BE19CBF005D60AD /* OverlayWindow.swift */,
+				3C6638FE1BE19CD3005D60AD /* SelectionView.swift */,
 				02B00A7419CE388800F924D6 /* PreferencesManager.swift */,
 				02E0E91219A41CB200766FDB /* ScreenshotMonitor.swift */,
 				0220B2AA19F4104A0064E9FE /* AppDelegate.swift */,
 			);
-			name = ScreamShot;
 			path = ScreamShot;
 			sourceTree = "<group>";
 		};
@@ -294,7 +301,6 @@
 			buildPhases = (
 				02FDC2C7194DF89D00E8CBC9 /* Sources */,
 				02FDC2C8194DF89D00E8CBC9 /* Frameworks */,
-				02236F3719D85668000CEAC3 /* Update CFBundleVersion */,
 				02FDC2C9194DF89D00E8CBC9 /* Resources */,
 				3C563B901B0211A00031213A /* Embed App Extensions */,
 				3C563BB21B0212D70031213A /* Embed Frameworks */,
@@ -352,7 +358,7 @@
 		02FDC2C3194DF89D00E8CBC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftMigration = 0700;
+				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "";
@@ -465,23 +471,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		02236F3719D85668000CEAC3 /* Update CFBundleVersion */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Update CFBundleVersion";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "revision=$(git rev-list HEAD --count)\nif [ -n \"$revision\" ]; then\necho \"Bumping CFBundleVersion to $revision\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $revision\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		02FDC2C7194DF89D00E8CBC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -494,7 +483,9 @@
 				028DC13D19FBBF6200833F97 /* UploadController.swift in Sources */,
 				02B00A7519CE388800F924D6 /* PreferencesManager.swift in Sources */,
 				3C470B911A4F5F3E0013136B /* ConfigurationWindowController.swift in Sources */,
+				3C6638F91BE19CBF005D60AD /* OverlayWindow.swift in Sources */,
 				0220B2AB19F4104A0064E9FE /* AppDelegate.swift in Sources */,
+				3C6638FF1BE19CD3005D60AD /* SelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

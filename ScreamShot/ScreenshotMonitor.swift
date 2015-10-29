@@ -58,7 +58,7 @@ class ScreenshotMonitor {
                     // Ensure that the screenshot detected is from the right folder and isn't blacklisted
                     if screenshotDirectory == self.screenshotLocationPath && !self.blacklist.contains(screenshotName!) {
                         print("Screenshot file event detected @ \(screenshotPath)");
-                        self.appDelegate.sendFile(screenshotPath, isScreenshot: true);
+                        self.appDelegate.sendScreenshot(screenshotPath);
                         self.blacklist.append(screenshotName!);
                     }
                 }

@@ -47,7 +47,7 @@ public class Upload: NSObject {
     }
     
     func attemptUpload(uploaderUrl: String) {
-        let r = Just.post(
+        Just.post(
             uploaderUrl,
             files: ["image": HTTPFile.URL(filePath, nil)],
             asyncProgressHandler: {(p) in

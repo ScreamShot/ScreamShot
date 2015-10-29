@@ -17,6 +17,7 @@
 import Cocoa
 import Foundation
 import ScreamUtils
+import AVFoundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
@@ -26,12 +27,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @IBOutlet weak var disableDetectionOption: NSMenuItem!
     @IBOutlet weak var lastItems: NSMenuItem!
     @IBOutlet weak var copyLastLink: NSMenuItem!
+    @IBOutlet weak var overlayWindow: OverlayWindow!
+    @IBOutlet weak var selectionView: SelectionView!
     
     let menuView = MenuView()
     var prefs: PreferencesManager!
     var monitor: ScreenshotMonitor!
     var uploadController: UploadController!
     var authController: ConfigurationWindowController!
+    var currentCaptureOutput: AVCaptureMovieFileOutput?
     
     // Delegate methods
     
@@ -48,6 +52,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         // Start monitoring for screenshots
         monitor = ScreenshotMonitor()
         monitor.startMonitoring()
+        
+        selectionView.captureStartedHandler = captureStarted
+        selectionView.captureOutputHandler = recordOutput
     }
     
     
@@ -74,6 +81,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         authController.showWindow(self);
     }
     
+    func recordOutput(outputFileURL: NSURL!){
+        sendFile(outputFileURL, deleteAfter: true)
+    }
+    
+    @IBAction func record(sender: NSMenuItem) {
+        // Check if currently recording
+        if let captureOutput = currentCaptureOutput {
+            // Stop recording
+            captureOutput.stopRecording()
+            
+            // Close the overlay window
+            selectionView.cancelOperation(sender)
+            // Reset the menu
+            menuView.setRecording(false)
+            // Clear the capture
+            currentCaptureOutput = nil
+        } else {
+            print("Click and drag to create a selection! :)")
+            
+            guard let screen = NSScreen.mainScreen() else {
+                return // You don't have a screen? :o
+            }
+            
+            // Make the overlay window fullscreen
+            overlayWindow.setFrame(screen.frame, display: false)
+            
+            overlayWindow.makeKeyAndOrderFront(sender)
+            
+            NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+            
+            selectionView.startSelection()
+        }
+    }
+    
     // Selector methods
     
     @IBAction func selectImages(sender: NSMenuItem) {
@@ -84,8 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         panel.allowsMultipleSelection = true;
         if panel.runModal() == NSModalResponseOK {
             for imageURL in panel.URLs {
-                sendFile(imageURL, isScreenshot: false);
-                
+                sendFile(imageURL, deleteAfter: false)
             }
         }
     }
@@ -117,14 +157,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         }
     }
     
-    
-    func sendFile(filePath: NSURL, isScreenshot: Bool){
-        if isScreenshot && prefs.isDetectionDisabled() {
-            return;
+    func sendScreenshot(filePath: NSURL){
+        if prefs.isDetectionDisabled() {
+            return
         }
-        
-        let type = isScreenshot ? "Screenshot" : "Image";
-        
+        sendFile(filePath, deleteAfter: self.prefs.shouldDeleteAfterUpload())
+    }
+    
+    func sendFile(filePath: NSURL, deleteAfter: Bool){
         menuView.setUploading(true);
         let upload = Upload(filePath: filePath);
         
@@ -133,12 +173,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         upload.addSuccessCallback({(link: String) -> () in
             // Tell the user
             ScreamUtils.copyToClipboard(link);
-            ScreamUtils.displayNotification("\(type) uploaded successfully!", informativeText: link);
+            ScreamUtils.displayNotification("File uploaded successfully!", informativeText: link);
             
             // Remove the file
             self.menuView.setLastItem(filePath.lastPathComponent!, link: link)
-            if isScreenshot && self.prefs.shouldDeleteAfterUpload() {
-                print("Deleting screenshot @ \(filePath)", terminator: "");
+            if deleteAfter {
+                print("Deleting file @ \(filePath)", terminator: "");
                 deleteFile(filePath.path!);
             }
             
@@ -150,7 +190,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         
         upload.addErrorCallback({(error: String) -> () in
             NSLog(error);
-            ScreamUtils.displayNotification("\(type) upload failed...", informativeText: "");
+            ScreamUtils.displayNotification("Upload failed...", informativeText: "");
         });
         
         upload.addStartingCallback({() -> () in
@@ -158,5 +198,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         });
         
         uploadController.addToQueue(upload);
+    }
+    
+    func captureStarted(captureOutput: AVCaptureMovieFileOutput) {
+        currentCaptureOutput = captureOutput
+        menuView.setRecording(true)
     }
 }

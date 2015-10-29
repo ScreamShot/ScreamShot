@@ -115,7 +115,7 @@ class MenuView: NSView, NSMenuDelegate {
             let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate;
             
             for file in files{
-                appDelegate.sendFile(NSURL(fileURLWithPath: file), isScreenshot: false);
+                appDelegate.sendFile(NSURL(fileURLWithPath: file), deleteAfter: false);
             }
             
         }
@@ -200,8 +200,17 @@ class MenuView: NSView, NSMenuDelegate {
         
         if items.count > 5{
             let itemMenu = items[items.count - 6 ] ;
-            Swift.print("Remove lastItem \(itemMenu.title)", terminator: "");
+            Swift.print("Remove lastItem \(itemMenu.title)", terminator: "", separator: "");
             app.lastItems!.submenu!.removeItem(itemMenu);
+        }
+    }
+    
+    func setRecording(isRecording: Bool) {
+        let menuItem = self.menu?.itemWithTag(42)
+        if isRecording {
+            menuItem?.title = "Stop recording"
+        }else{
+            menuItem?.title = "Record"
         }
     }
     

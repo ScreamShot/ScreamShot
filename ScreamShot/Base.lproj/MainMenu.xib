@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -19,14 +19,22 @@
                 <outlet property="lastItems" destination="nht-Dg-NbL" id="7Gk-ED-7ca"/>
                 <outlet property="launchAtStartup" destination="KPZ-iB-rTK" id="XHW-en-Yce"/>
                 <outlet property="menu" destination="Qba-hr-jWV" id="gnm-M9-Vwq"/>
+                <outlet property="overlayWindow" destination="mun-VQ-9DK" id="d7x-B6-BJ9"/>
+                <outlet property="selectionView" destination="qMG-Nu-MEq" id="E5A-Ub-gt9"/>
             </connections>
         </customObject>
         <menu id="Qba-hr-jWV">
             <items>
-                <menuItem title="Select files" keyEquivalent="s" id="d5R-Ji-SH4">
+                <menuItem title="Record" tag="42" keyEquivalent="r" id="d5R-Ji-SH4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="selectImages:" target="Voe-Tx-rLC" id="cfe-EI-jrC"/>
+                        <action selector="record:" target="Voe-Tx-rLC" id="PWm-yY-xTW"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Select files" keyEquivalent="s" id="Sft-Xh-nxV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="selectImages:" target="Voe-Tx-rLC" id="1aP-ox-qdl"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Copy last link" keyEquivalent="c" id="fLq-E7-ss8">
@@ -85,5 +93,80 @@
         <menuItem title="Item" id="8Me-Qd-ayO">
             <modifierMask key="keyEquivalentModifierMask"/>
         </menuItem>
+        <customView wantsLayer="YES" id="jEO-i0-Eos" customClass="NSVisualEffectView">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="29"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uSq-He-RkF">
+                    <rect key="frame" x="14" y="-3" width="135" height="32"/>
+                    <animations/>
+                    <buttonCell key="cell" type="push" title="Start Recording" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zo0-iC-vyx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="startRecordingAction:" target="qMG-Nu-MEq" id="w09-Al-NH2"/>
+                    </connections>
+                </button>
+                <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zrI-hW-7eB">
+                    <rect key="frame" x="149" y="0.0" width="5" height="29"/>
+                    <animations/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UZK-bf-w7n">
+                    <rect key="frame" x="154" y="-3" width="82" height="32"/>
+                    <animations/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="41R-mz-dw0">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelAction:" target="qMG-Nu-MEq" id="Dga-bU-WfH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="uSq-He-RkF" firstAttribute="baseline" secondItem="UZK-bf-w7n" secondAttribute="baseline" id="Poc-jX-j4e"/>
+                <constraint firstItem="zrI-hW-7eB" firstAttribute="top" secondItem="jEO-i0-Eos" secondAttribute="top" id="QiG-vG-S2b"/>
+                <constraint firstItem="zrI-hW-7eB" firstAttribute="leading" secondItem="uSq-He-RkF" secondAttribute="trailing" constant="8" symbolic="YES" id="ThQ-g7-Wgh"/>
+                <constraint firstItem="UZK-bf-w7n" firstAttribute="leading" secondItem="zrI-hW-7eB" secondAttribute="trailing" constant="8" symbolic="YES" id="hXk-2f-F2L"/>
+                <constraint firstItem="zrI-hW-7eB" firstAttribute="centerY" secondItem="UZK-bf-w7n" secondAttribute="centerY" id="jaE-0f-dYp"/>
+                <constraint firstItem="uSq-He-RkF" firstAttribute="leading" secondItem="jEO-i0-Eos" secondAttribute="leading" constant="20" symbolic="YES" id="mea-Ae-ant"/>
+                <constraint firstAttribute="bottom" secondItem="zrI-hW-7eB" secondAttribute="bottom" id="myU-Ke-9kP"/>
+            </constraints>
+            <animations/>
+            <point key="canvasLocation" x="370" y="510.5"/>
+        </customView>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hasShadow="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="mun-VQ-9DK" customClass="OverlayWindow" customModule="ScreamShot" customModuleProvider="target">
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="131" y="158" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <view key="contentView" id="Q3h-JA-QZK">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMG-Nu-MEq" customClass="SelectionView" customModule="ScreamShot" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <animations/>
+                        <connections>
+                            <outlet property="optionsView" destination="jEO-i0-Eos" id="mX9-eL-rTr"/>
+                        </connections>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="qMG-Nu-MEq" firstAttribute="leading" secondItem="Q3h-JA-QZK" secondAttribute="leading" id="IUv-jw-tbf"/>
+                    <constraint firstAttribute="trailing" secondItem="qMG-Nu-MEq" secondAttribute="trailing" id="LN4-JY-pXm"/>
+                    <constraint firstItem="qMG-Nu-MEq" firstAttribute="top" secondItem="Q3h-JA-QZK" secondAttribute="top" id="T7n-hG-6Wb"/>
+                    <constraint firstAttribute="bottom" secondItem="qMG-Nu-MEq" secondAttribute="bottom" id="tNq-PS-3h7"/>
+                </constraints>
+                <animations/>
+            </view>
+            <point key="canvasLocation" x="356" y="310"/>
+        </window>
     </objects>
 </document>
