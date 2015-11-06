@@ -18,6 +18,8 @@ import Cocoa
 import Foundation
 import ScreamUtils
 import AVFoundation
+import Fabric
+import Crashlytics
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
@@ -31,6 +33,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @IBOutlet weak var selectionView: SelectionView!
     
     let menuView = MenuView()
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     var prefs: PreferencesManager!
     var monitor: ScreenshotMonitor!
     var uploadController: UploadController!
@@ -40,6 +44,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     // Delegate methods
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
+        defaults.registerDefaults(["NSApplicationCrashOnExceptions": true])
+        Fabric.with([Crashlytics.self])
+        
         NSUserNotificationCenter.defaultUserNotificationCenter().delegate = self
         prefs = PreferencesManager()
         uploadController = UploadController(uploadUrl: prefs.getUploadUrl())
@@ -99,7 +106,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             currentCaptureOutput = nil
         } else {
             print("Click and drag to create a selection! :)")
-            
             guard let screen = NSScreen.mainScreen() else {
                 return // You don't have a screen? :o
             }
@@ -111,7 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             
             NSApplication.sharedApplication().activateIgnoringOtherApps(true)
             
-            selectionView.startSelection()
+            selectionView.startSelection(screen)
         }
     }
     
