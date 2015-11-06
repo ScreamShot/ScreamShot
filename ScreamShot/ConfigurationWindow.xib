@@ -15,16 +15,16 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="ScreamShot Configuration" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="548" y="401" width="471" height="113"/>
+            <rect key="contentRect" x="548" y="401" width="471" height="88"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="471" height="113"/>
+                <rect key="frame" x="0.0" y="0.0" width="471" height="88"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField autoresizesSubviews="NO" canDrawConcurrently="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="39S-hc-U6b">
-                        <rect key="frame" x="20" y="71" width="431" height="22"/>
+                        <rect key="frame" x="20" y="46" width="431" height="22"/>
                         <animations/>
-                        <textFieldCell key="cell" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="Uploader url" usesSingleLineMode="YES" bezelStyle="round" id="vbD-AX-tyQ">
+                        <textFieldCell key="cell" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="http://your.website.com/upload.php" usesSingleLineMode="YES" bezelStyle="round" id="vbD-AX-tyQ">
                             <font key="font" metaFont="user"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -36,15 +36,6 @@
                                 </dictionary>
                             </binding>
                         </connections>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wK-bF-dBY">
-                        <rect key="frame" x="36" y="46" width="398" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Note: If you use OS X 10.11 or above, the protocol has to be https" id="ugk-rW-DXA">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ik-K1x">
                         <rect key="frame" x="193" y="19" width="85" height="19"/>
@@ -72,7 +63,7 @@ AAAAAAEGA
                     </caTransition>
                 </animations>
             </view>
-            <point key="canvasLocation" x="-82.5" y="52.5"/>
+            <point key="canvasLocation" x="-82.5" y="40"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="M1P-kk-Tl5"/>
     </objects>

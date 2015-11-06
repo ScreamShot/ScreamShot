@@ -16,6 +16,7 @@ class SelectionView: NSView, AVCaptureFileOutputRecordingDelegate {
     
     let viewPadding: CGFloat = 6
     
+    var screen: NSScreen?;
     var marchingAntsBackgroundLayer: CAShapeLayer?
     var marchingAntsAnimationLayer: CAShapeLayer?
     var crossLayer1: CAShapeLayer?
@@ -80,7 +81,8 @@ class SelectionView: NSView, AVCaptureFileOutputRecordingDelegate {
         return path
     }
     
-    func startSelection() {
+    func startSelection(screen: NSScreen) {
+        self.screen = screen;
         window?.ignoresMouseEvents = false
         
         addSubview(optionsView)
@@ -150,7 +152,7 @@ class SelectionView: NSView, AVCaptureFileOutputRecordingDelegate {
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         currentCaptureSession = captureSession
         
-        let screenInput = AVCaptureScreenInput(displayID: CGMainDisplayID())
+        let screenInput = AVCaptureScreenInput(displayID: getDisplayID(screen!))
         screenInput.cropRect = selectionRect
         //Could use (screenInput!.minFrameDuration = CMTimeMake(1, 5)) to set framerate
         
@@ -257,5 +259,4 @@ class SelectionView: NSView, AVCaptureFileOutputRecordingDelegate {
         }
         addCursorRect(optionsView.frame, cursor: NSCursor.arrowCursor())
     }
-    
 }

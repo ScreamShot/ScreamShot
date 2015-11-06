@@ -44,7 +44,6 @@ public func openURL(url: String) {
 }
 
 
-
 public func getMimetype(filePath: NSURL) -> String{
     let UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (filePath.pathExtension as NSString?)!, nil)!.takeUnretainedValue();
     let str = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType);
@@ -53,4 +52,12 @@ public func getMimetype(filePath: NSURL) -> String{
     } else {
         return str!.takeUnretainedValue() as String;
     }
+}
+
+
+public func getDisplayID(screen: NSScreen) -> UInt32 {
+    let screenDetails: NSDictionary = screen.deviceDescription
+    let screenID: AnyObject? = screenDetails.objectForKey("NSScreenNumber")
+    let screenIDInt: Int = screenID as! Int
+    return UInt32(screenIDInt)
 }
