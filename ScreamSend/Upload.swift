@@ -52,7 +52,7 @@ public class Upload: NSObject {
             files: ["image": HTTPFile.URL(filePath, nil)],
             asyncProgressHandler: {(p) in
                 for callback in self.progressCallback{
-                    callback(Double(p.percent)/100.0);
+                    callback(Double(p.percent));
                 }
             },
             asyncCompletionHandler: {(r) in
